@@ -133,24 +133,12 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bor
 .setup-hint{text-align:center;font-size:13px;color:var(–di);margin-top:.5rem}
 
 /* ══════════════════════════
-PRIVACY SCREEN
+PRIVACY SCREEN (proper screen div - no overlay)
 ══════════════════════════ */
-.privacy-screen-overlay{
-position:fixed;inset:0;z-index:500;
-display:none;flex-direction:column;align-items:center;justify-content:center;
-background:var(–bg);
-animation:sIn .3s ease;
-}
-.privacy-screen-overlay.show{display:flex}
-.priv-logo{font-family:var(–fd);font-size:56px;letter-spacing:5px;background:linear-gradient(135deg,var(–red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.5rem}
-.priv-icon{font-size:72px;margin-bottom:1rem;animation:pulse2 2s ease-in-out infinite}
 @keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
-.priv-title{font-family:var(–fd);font-size:38px;letter-spacing:3px;color:var(–tx);margin-bottom:.5rem}
-.priv-sub{font-size:16px;color:var(–mu);margin-bottom:2.5rem;text-align:center;max-width:300px}
 .priv-btn{padding:16px 52px;background:linear-gradient(135deg,var(–red),#c43a39);color:#fff;border:none;border-radius:100px;font-family:var(–fd);font-size:22px;letter-spacing:2px;cursor:pointer;transition:all .2s;box-shadow:0 8px 28px rgba(226,75,74,0.35)}
 .priv-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(226,75,74,0.5)}
 .priv-btn:active{transform:translateY(0)}
-.priv-mesh{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent 0,transparent 40px,rgba(255,255,255,0.012) 40px,rgba(255,255,255,0.012) 41px);pointer-events:none}
 
 /* ══════════════════════════
 CARDS
@@ -314,7 +302,10 @@ RESULT + STATS
 
 .result-btns{display:flex;flex-direction:column;gap:8px}
 
-/* confetti */
+@keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.priv-btn{padding:16px 52px;background:linear-gradient(135deg,var(–red),#c43a39);color:#fff;border:none;border-radius:100px;font-family:var(–fd);font-size:22px;letter-spacing:2px;cursor:pointer;transition:all .2s;box-shadow:0 8px 28px rgba(226,75,74,0.35)}
+.priv-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(226,75,74,0.5)}
+.priv-btn:active{transform:translateY(0)}
 .conf-wrap{position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden}
 .conf{position:absolute;width:8px;height:8px;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
@@ -338,14 +329,13 @@ header{padding:1rem 1rem 0}
 <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
 <div class="conf-wrap" id="conf-wrap"></div>
 
-<!-- PRIVACY SCREEN OVERLAY -->
+<!-- ══ PRIVACY (proper screen, not overlay) ══ -->
 
-<div class="privacy-screen-overlay" id="priv-overlay">
-  <div class="priv-mesh"></div>
-  <div class="priv-logo">IMPOSTER</div>
-  <div class="priv-icon">🔒</div>
-  <div class="priv-title" id="priv-title">PASS THE PHONE</div>
-  <p class="priv-sub" id="priv-sub">Hand the phone to Player 1</p>
+<div class="screen" id="s-privacy" style="display:none;min-height:80vh;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+  <div style="font-family:var(--fd);font-size:52px;letter-spacing:5px;background:linear-gradient(135deg,var(--red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.5rem">IMPOSTER</div>
+  <div style="font-size:72px;margin-bottom:1rem;animation:pulse2 2s ease-in-out infinite">🔒</div>
+  <div style="font-family:var(--fd);font-size:36px;letter-spacing:3px;margin-bottom:.5rem" id="priv-title">PASS THE PHONE</div>
+  <p style="font-size:16px;color:var(--mu);margin-bottom:2.5rem;max-width:300px" id="priv-sub">Hand the phone to Player 1</p>
   <button class="priv-btn" id="priv-btn">I'm Ready →</button>
 </div>
 
@@ -667,8 +657,11 @@ function pName(i){return playerNames[i]&&playerNames[i].trim()?playerNames[i].tr
 function getCats(){return WORDS[lang];}
 
 function ss(id){
+  document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  const el=document.getElementById(id);
+  el.style.display = id==='s-privacy' ? 'flex' : 'block';
+  el.classList.add('active');
   document.getElementById('home-btn').classList.toggle('vis', id!=='s-setup');
 }
 function goHome(){stopTimer();ss('s-setup');document.getElementById('score-bar').classList.remove('show');}
@@ -740,12 +733,19 @@ function toggleOpt(k){
 ═══════════════════════════════════ */
 function showPrivacy(playerIdx, onDone){
   if(!opts.priv){onDone();return;}
-  const ov=document.getElementById('priv-overlay');
+
+  /* Switch to a dedicated privacy screen (not an overlay) */
+  ss('s-privacy');
+
   document.getElementById('priv-title').textContent='PASS THE PHONE';
   document.getElementById('priv-sub').textContent=`Hand it to ${pName(playerIdx)}`;
   document.getElementById('priv-btn').textContent=`I'm ${pName(playerIdx)} — Ready →`;
-  ov.classList.add('show');
-  document.getElementById('priv-btn').onclick=()=>{ov.classList.remove('show');onDone();};
+
+  /* Only after tap: go back to cards screen and THEN inject card content */
+  document.getElementById('priv-btn').onclick=()=>{
+    ss('s-cards');
+    onDone(); /* showCard called here — after screen switch */
+  };
 }
 
 /* ═══════════════════════════════════
