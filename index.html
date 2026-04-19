@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imposter — The Party Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--surface:#111118;--surface2:#1a1a24;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#f0eee8;--muted:rgba(240,238,232,0.55);--dim:rgba(240,238,232,0.25);
+  --red:#e24b4a;--red-light:#f09595;--red-dark:#a32d2d;--red-glow:rgba(226,75,74,0.25);
+  --blue:#378add;--blue-light:#85b7eb;--blue-dark:#185fa5;
+  --green:#43e8a0;--amber:#f7b731;
+  --fd:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;
+  --r:16px;--rl:24px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px)}
+.o1{width:500px;height:500px;background:rgba(226,75,74,0.08);top:-150px;right:-100px;animation:dA 12s ease-in-out infinite}
+.o2{width:400px;height:400px;background:rgba(55,138,221,0.06);bottom:-100px;left:-80px;animation:dB 15s ease-in-out infinite}
+.o3{width:300px;height:300px;background:rgba(247,183,49,0.05);top:40%;left:40%;animation:dC 10s ease-in-out infinite}
+@keyframes dA{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,50px)}}
+@keyframes dB{0%,100%{transform:translate(0,0)}50%{transform:translate(50px,-40px)}}
+@keyframes dC{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,30px)}}
+
+.app{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+
+header{width:100%;max-width:900px;padding:2rem 2rem 0;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(–fd);font-size:28px;letter-spacing:3px;background:linear-gradient(135deg,var(–red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hbadge{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(–green);padding:5px 12px;border-radius:100px;border:1px solid rgba(67,232,160,0.25);background:rgba(67,232,160,0.07)}
+
+.screen{display:none;width:100%;max-width:900px;padding:2rem;animation:sIn 0.4s cubic-bezier(0.16,1,0.3,1)}
+.screen.active{display:block}
+@keyframes sIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* === SETUP === */
+.setup-hero{text-align:center;margin-bottom:2.5rem;padding-top:1rem}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(–red);padding:6px 14px;border-radius:100px;border:1px solid rgba(226,75,74,0.3);background:rgba(226,75,74,0.07);margin-bottom:1.25rem}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(–red);animation:pd 1.5s infinite}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+.setup-title{font-family:var(–fd);font-size:clamp(64px,12vw,120px);letter-spacing:4px;line-height:0.9;background:linear-gradient(160deg,#fff 0%,var(–red-light) 40%,var(–red) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.75rem}
+.setup-sub{font-size:17px;color:var(–muted);max-width:400px;margin:0 auto}
+
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.panel{background:var(–surface);border:1px solid var(–border);border-radius:var(–rl);padding:1.5rem;position:relative;overflow:hidden}
+.panel::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(–red),transparent);opacity:0.5}
+.plabel{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(–muted);margin-bottom:1.25rem}
+
+.slider-display{display:flex;align-items:flex-end;gap:12px;margin-bottom:1rem}
+.slider-num{font-family:var(–fd);font-size:72px;letter-spacing:-2px;line-height:1;color:var(–text)}
+.slider-unit{font-size:14px;color:var(–muted);margin-bottom:12px}
+
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:var(–surface2);outline:none;cursor:pointer;margin-bottom:0.75rem}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(–red);cursor:pointer;box-shadow:0 0 12px var(–red-glow);transition:transform 0.15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;border:none;background:var(–red);cursor:pointer}
+
+.imp-pills{display:flex;gap:8px;flex-wrap:wrap}
+.imp-pill{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;border:1px solid rgba(226,75,74,0.3);background:rgba(226,75,74,0.08);color:var(–red-light)}
+
+.imp-center{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px}
+.imp-big-num{font-family:var(–fd);font-size:80px;line-height:1;background:linear-gradient(135deg,var(–red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.cat-panel{grid-column:1/-1}
+.cat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.cat-chip{padding:10px 12px;border-radius:12px;border:1px solid var(–border2);background:var(–surface2);font-size:13px;font-weight:500;color:var(–muted);cursor:pointer;transition:all 0.18s;display:flex;align-items:center;gap:8px;user-select:none}
+.cat-ico{font-size:18px;flex-shrink:0}
+.cat-chk{width:16px;height:16px;border-radius:50%;border:1.5px solid var(–border2);margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all 0.18s}
+.cat-chip:hover{border-color:rgba(226,75,74,0.4);color:var(–text);background:rgba(226,75,74,0.06)}
+.cat-chip.on{border-color:var(–red);background:rgba(226,75,74,0.12);color:var(–red-light)}
+.cat-chip.on .cat-chk{background:var(–red);border-color:var(–red);color:#fff}
+.link-btn{font-size:12px;color:var(–muted);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(–fb);transition:color 0.15s}
+.link-btn:hover{color:var(–red)}
+.cats-actions{display:flex;gap:8px}
+
+.start-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(–red),#c43a39);color:#fff;border:none;border-radius:var(–rl);font-family:var(–fd);font-size:28px;letter-spacing:3px;cursor:pointer;transition:all 0.2s;box-shadow:0 8px 32px rgba(226,75,74,0.3);position:relative;overflow:hidden}
+.start-btn::before{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);opacity:0;transition:opacity 0.2s}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(226,75,74,0.45)}
+.start-btn:hover::before{opacity:1}
+.start-btn:active{transform:translateY(0)}
+.start-btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;box-shadow:none}
+.setup-hint{text-align:center;font-size:13px;color:var(–dim);margin-top:0.75rem}
+
+/* === CARDS === */
+.cards-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.cp-label{font-family:var(–fd);font-size:20px;letter-spacing:1px;color:var(–muted)}
+.cp-num{font-family:var(–fd);font-size:32px;letter-spacing:1px;color:var(–text);line-height:1}
+.prog-track{display:flex;gap:5px;align-items:center;flex-wrap:wrap;max-width:300px;justify-content:flex-end}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(–surface2);border:1px solid var(–border2);transition:all 0.3s}
+.pdot.done{background:rgba(226,75,74,0.3);border-color:rgba(226,75,74,0.3)}
+.pdot.active{background:var(–red);border-color:var(–red);box-shadow:0 0 8px var(–red-glow);transform:scale(1.3)}
+
+.card-stage{display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:1rem 0 2rem}
+
+.flip-wrap{perspective:1200px;width:300px;height:340px;cursor:pointer;user-select:none}
+.flip-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.65s cubic-bezier(0.4,0,0.2,1);position:relative}
+.flip-wrap.flipped .flip-inner{transform:rotateY(180deg)}
+.cface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
+
+.cback{background:var(–surface);border:1px solid var(–border2);gap:14px;position:relative;overflow:hidden}
+.cback-mesh{position:absolute;inset:0;border-radius:20px;background-image:repeating-linear-gradient(45deg,transparent 0,transparent 20px,rgba(255,255,255,0.015) 20px,rgba(255,255,255,0.015) 21px),repeating-linear-gradient(-45deg,transparent 0,transparent 20px,rgba(255,255,255,0.015) 20px,rgba(255,255,255,0.015) 21px)}
+.cback-logo{font-family:var(–fd);font-size:48px;letter-spacing:4px;background:linear-gradient(135deg,var(–red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1}
+.cback-sub{font-size:12px;color:var(–dim);letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1}
+.tap-hint{font-size:12px;color:var(–dim);letter-spacing:1.5px;text-transform:uppercase;position:relative;z-index:1;animation:blink 2.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:0.4}50%{opacity:1}}
+
+.cfront{transform:rotateY(180deg);gap:6px;padding:1.75rem}
+.cfront.crew{background:linear-gradient(160deg,#0d1f35,#142d4a);border:2px solid rgba(55,138,221,0.4);box-shadow:0 0 40px rgba(55,138,221,0.12),inset 0 1px 0 rgba(255,255,255,0.06)}
+.cfront.imp{background:linear-gradient(160deg,#2a0f0f,#3d1515);border:2px solid rgba(226,75,74,0.5);box-shadow:0 0 40px rgba(226,75,74,0.15),inset 0 1px 0 rgba(255,255,255,0.06)}
+
+.role-tag{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:8px}
+.crew .role-tag{background:rgba(55,138,221,0.2);color:var(–blue-light);border:1px solid rgba(55,138,221,0.3)}
+.imp .role-tag{background:rgba(226,75,74,0.2);color:var(–red-light);border:1px solid rgba(226,75,74,0.3)}
+.cface-emoji{font-size:56px;line-height:1;margin:4px 0}
+.cface-cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:2px}
+.crew .cface-cat{color:rgba(55,138,221,0.7)}
+.imp .cface-cat{color:rgba(226,75,74,0.7)}
+.cface-word{font-family:var(–fd);font-size:46px;letter-spacing:2px;line-height:1;text-align:center}
+.crew .cface-word{color:#c8dff5}
+.imp .cface-word{color:#f5c0c0}
+.cface-note{font-size:12px;margin-top:10px;padding:7px 14px;border-radius:100px;font-weight:500;text-align:center}
+.crew .cface-note{background:rgba(55,138,221,0.1);color:var(–blue-light)}
+.imp .cface-note{background:rgba(226,75,74,0.12);color:var(–red-light)}
+
+.next-btn{padding:14px 40px;border-radius:100px;background:transparent;border:1.5px solid var(–border2);color:var(–text);font-size:15px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:var(–fb);display:none}
+.next-btn.show{display:inline-flex;align-items:center;gap:8px;animation:fUp 0.3s ease}
+.next-btn:hover{border-color:var(–red);color:var(–red);background:rgba(226,75,74,0.07)}
+@keyframes fUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* === PLAY === */
+.play-top{text-align:center;margin-bottom:2rem}
+.play-title{font-family:var(–fd);font-size:52px;letter-spacing:3px;color:var(–text);margin-bottom:4px;line-height:1}
+.play-sub{font-size:15px;color:var(–muted)}
+
+.wrc{background:var(–surface);border:1px solid var(–border);border-radius:var(–rl);padding:2rem;text-align:center;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.wrc::after{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(226,75,74,0.06) 0%,transparent 60%);pointer-events:none}
+.wrc-lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(–dim);margin-bottom:6px}
+.wrc-word{font-family:var(–fd);font-size:64px;letter-spacing:3px;line-height:1;background:linear-gradient(135deg,var(–text),rgba(240,238,232,0.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.wrc-cat{font-size:13px;color:var(–muted);margin-top:6px}
+
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.sbox{background:var(–surface);border:1px solid var(–border);border-radius:var(–r);padding:1.25rem;text-align:center}
+.sbox-v{font-family:var(–fd);font-size:40px;letter-spacing:1px;line-height:1;color:var(–text)}
+.sbox-l{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(–dim);margin-top:4px}
+
+.action-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem}
+.abtn{display:flex;align-items:center;gap:12px;padding:15px 20px;border-radius:var(–r);border:1px solid;cursor:pointer;font-size:15px;font-weight:500;font-family:var(–fb);transition:all 0.18s;text-align:left;background:transparent}
+.abtn .ico{font-size:20px;flex-shrink:0}
+.abtn.red{border-color:rgba(226,75,74,0.3);color:var(–red-light)}
+.abtn.red:hover{background:rgba(226,75,74,0.08);border-color:var(–red)}
+.abtn.amber{border-color:rgba(247,183,49,0.3);color:#fac775}
+.abtn.amber:hover{background:rgba(247,183,49,0.07);border-color:var(–amber)}
+.abtn.ghost{border-color:var(–border2);color:var(–muted)}
+.abtn.ghost:hover{border-color:var(–border2);color:var(–text);background:var(–surface)}
+.abtn-body div:last-child{font-size:12px;opacity:0.6;margin-top:1px}
+
+.rtable{background:var(–surface);border:1px solid var(–border);border-radius:var(–rl);overflow:hidden;margin-top:1rem;display:none;animation:fUp 0.3s ease}
+.rtable.open{display:block}
+.rt-head{padding:1rem 1.5rem;border-bottom:1px solid var(–border);font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(–dim);display:grid;grid-template-columns:1fr auto auto;gap:1rem}
+.rt-row{padding:0.9rem 1.5rem;border-bottom:1px solid var(–border);display:grid;grid-template-columns:1fr auto auto;gap:1rem;align-items:center;font-size:14px}
+.rt-row:last-child{border-bottom:none}
+.rt-row:nth-child(even){background:rgba(255,255,255,0.015)}
+.rt-player{font-weight:500}
+.rt-word{font-size:13px;color:var(–muted);text-align:center}
+.rt-badge{font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.rt-badge.imp{background:rgba(226,75,74,0.15);color:var(–red-light);border:1px solid rgba(226,75,74,0.3)}
+.rt-badge.crew{background:rgba(55,138,221,0.12);color:var(–blue-light);border:1px solid rgba(55,138,221,0.25)}
+
+@media(max-width:620px){
+header{padding:1.25rem 1.25rem 0}
+.screen{padding:1.25rem}
+.panels{grid-template-columns:1fr}
+.slider-num{font-size:56px}
+.flip-wrap{width:260px;height:300px}
+.cface-word{font-size:38px}
+.sbox-v{font-size:30px}
+}
+</style>
+
+</head>
+<body>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+<div class="orb o3"></div>
+
+<div class="app">
+  <header>
+    <div class="logo">IMPOSTER</div>
+    <div class="hbadge">Party Game</div>
+  </header>
+
+  <!-- SETUP -->
+
+  <div class="screen active" id="s-setup">
+    <div class="setup-hero">
+      <div class="eyebrow"><div class="pulse-dot"></div>Who is the liar?</div>
+      <div class="setup-title">IMPOSTER</div>
+      <p class="setup-sub">One word. One liar. Everyone talking. Can you find them?</p>
+    </div>
+
+```
+<div class="panels">
+  <div class="panel">
+    <div class="plabel">Players</div>
+    <div class="slider-display">
+      <div class="slider-num" id="pnum">5</div>
+      <div class="slider-unit">players</div>
+    </div>
+    <input type="range" id="pslider" min="3" max="20" value="5" step="1">
+    <div class="imp-pills" id="ipills"></div>
+  </div>
+
+  <div class="panel imp-center">
+    <div class="plabel" style="margin:0">Imposters</div>
+    <div class="imp-big-num" id="ibig">1</div>
+    <div style="font-size:13px;color:var(--muted)" id="iformula">1 for ≤5 players</div>
+    <div style="font-size:12px;color:var(--dim)" id="crewcount">4 crewmates</div>
+  </div>
+
+  <div class="panel cat-panel">
+    <div class="cat-top">
+      <div class="plabel" style="margin:0">Categories — pick at least 1</div>
+      <div class="cats-actions">
+        <button class="link-btn" id="all-btn">All</button>
+        <button class="link-btn" id="none-btn">None</button>
+      </div>
+    </div>
+    <div class="cats-grid" id="cgrid"></div>
+  </div>
+</div>
+
+<button class="start-btn" id="start-btn" disabled>DEAL CARDS</button>
+<p class="setup-hint" id="shint">Select at least 1 category to start</p>
+```
+
+  </div>
+
+  <!-- CARDS -->
+
+  <div class="screen" id="s-cards">
+    <div class="cards-header">
+      <div>
+        <div class="cp-label">Now viewing</div>
+        <div class="cp-num" id="cplabel">Player 1</div>
+      </div>
+      <div class="prog-track" id="ptrack"></div>
+    </div>
+
+```
+<div class="card-stage">
+  <div class="flip-wrap" id="fwrap">
+    <div class="flip-inner">
+      <div class="cface cback">
+        <div class="cback-mesh"></div>
+        <div class="cback-logo">IMPOSTER</div>
+        <div class="cback-sub">Your secret card</div>
+        <div class="tap-hint">tap to reveal</div>
+      </div>
+      <div class="cface cfront" id="cfront"></div>
+    </div>
+  </div>
+  <button class="next-btn" id="next-btn">Next player →</button>
+</div>
+```
+
+  </div>
+
+  <!-- PLAY -->
+
+  <div class="screen" id="s-play">
+    <div class="play-top">
+      <div class="play-title">GAME ON</div>
+      <p class="play-sub">Discuss, debate, and vote — find the imposter!</p>
+    </div>
+
+```
+<div class="wrc">
+  <div class="wrc-lbl">The secret word (crew knows this)</div>
+  <div class="wrc-word" id="pword">—</div>
+  <div class="wrc-cat" id="pcat">—</div>
+</div>
+
+<div class="stats-row">
+  <div class="sbox"><div class="sbox-v" id="st-p">—</div><div class="sbox-l">Players</div></div>
+  <div class="sbox"><div class="sbox-v" id="st-i" style="color:var(--red)">—</div><div class="sbox-l">Imposters</div></div>
+  <div class="sbox"><div class="sbox-v" id="st-c" style="color:var(--blue-light)">—</div><div class="sbox-l">Crewmates</div></div>
+</div>
+
+<div class="action-btns">
+  <button class="abtn red" id="reveal-btn"><span class="ico">👁️</span><div class="abtn-body"><div>Reveal all roles</div><div>See who was the imposter</div></div></button>
+  <button class="abtn amber" id="again-btn"><span class="ico">🔄</span><div class="abtn-body"><div>Play again</div><div>Same players &amp; categories</div></div></button>
+  <button class="abtn ghost" id="reset-btn"><span class="ico">⚙️</span><div class="abtn-body"><div>Change settings</div><div>Back to setup</div></div></button>
+</div>
+
+<div class="rtable" id="rtable">
+  <div class="rt-head"><span>Player</span><span>Word seen</span><span>Role</span></div>
+  <div id="rrows"></div>
+</div>
+```
+
+  </div>
+</div>
+
+<script>
+const CATS=[
+  {id:'animals',   l:'Animals',     i:'🐾', w:['Elephant','Penguin','Dolphin','Cheetah','Gorilla','Flamingo','Crocodile','Peacock','Kangaroo','Octopus','Jaguar','Panda','Koala','Meerkat','Capybara']},
+  {id:'food',      l:'Food',        i:'🍕', w:['Spaghetti','Sushi','Burrito','Fondue','Paella','Croissant','Dumpling','Pretzel','Waffles','Ramen','Falafel','Cheesecake','Tiramisu','Pierogi','Baklava']},
+  {id:'movies',    l:'Movies',      i:'🎬', w:['Inception','Titanic','Parasite','Interstellar','Joker','Gladiator','Dune','Matrix','Avatar','Grease','Beetlejuice','Oppenheimer','Barbie','Spotlight','Whiplash']},
+  {id:'sports',    l:'Sports',      i:'⚽', w:['Cricket','Tennis','Swimming','Archery','Skiing','Volleyball','Badminton','Surfing','Fencing','Polo','Rowing','Wrestling','Curling','Lacrosse','Kabaddi']},
+  {id:'jobs',      l:'Jobs',        i:'💼', w:['Surgeon','Astronaut','Detective','Architect','Firefighter','Journalist','Chef','Pilot','Lawyer','Scientist','Referee','Magician','Sommelier','Taxidermist','Puppeteer']},
+  {id:'places',    l:'Places',      i:'🌍', w:['Volcano','Airport','Library','Casino','Stadium','Hospital','Lighthouse','Monastery','Bazaar','Glacier','Arcade','Submarine','Catacomb','Observatory','Aqueduct']},
+  {id:'music',     l:'Music',       i:'🎵', w:['Guitar','Saxophone','Drums','Violin','Trumpet','Ukulele','Harp','Accordion','Sitar','Flute','Cello','Banjo','Theremin','Didgeridoo','Marimba']},
+  {id:'tech',      l:'Tech',        i:'💻', w:['Blockchain','Satellite','Algorithm','Firewall','Database','Microchip','Hologram','Server','Quantum','Drone','Scanner','Firmware','Proxy','Kernel','Tensor']},
+  {id:'nature',    l:'Nature',      i:'🌿', w:['Avalanche','Mangrove','Fjord','Thunderstorm','Tornado','Rainforest','Tundra','Geyser','Monsoon','Blizzard','Eclipse','Permafrost','Estuary','Sinkhole','Aurora']},
+  {id:'fantasy',   l:'Fantasy',     i:'🧙', w:['Dragon','Unicorn','Wizard','Vampire','Mermaid','Golem','Phoenix','Troll','Siren','Werewolf','Centaur','Banshee','Chimera','Basilisk','Lich']},
+  {id:'transport', l:'Transport',   i:'🚀', w:['Hovercraft','Zeppelin','Gondola','Rickshaw','Cable car','Catamaran','Monorail','Chariot','Glider','Tuk-tuk','Hydrofoil','Snowcat','Funicular','Segway','Autorickshaw']},
+  {id:'science',   l:'Science',     i:'🔬', w:['Black hole','Gravity','Evolution','Relativity','Photosynthesis','Fusion','Orbit','Spectrum','Mutation','Refraction','Entropy','Osmosis','Mitosis','Quasar','Neutrino']},
+  {id:'emotions',  l:'Emotions',    i:'😂', w:['Jealousy','Euphoria','Nostalgia','Anxiety','Empathy','Rage','Loneliness','Pride','Boredom','Admiration','Disgust','Serenity','Schadenfreude','Catharsis','Melancholy']},
+  {id:'crime',     l:'Crime',       i:'🔍', w:['Alibi','Heist','Ransom','Sabotage','Smuggling','Forgery','Blackmail','Wiretap','Espionage','Arson','Kidnapping','Extortion','Stalking','Embezzlement','Perjury']},
+  {id:'clothing',  l:'Clothing',    i:'👗', w:['Kimono','Tuxedo','Sari','Hoodie','Bikini','Turban','Beret','Overalls','Poncho','Toga','Corset','Kilt','Dashiki','Sarafan','Dirndl']},
+  {id:'body',      l:'Body & Health',i:'🏥',w:['Skeleton','Vaccine','Heartbeat','Migraine','Surgery','Muscle','Neuron','Hormone','Reflexes','Immunity','Fever','Stamina','Ligament','Vertebra','Cortisol']},
+  {id:'myth',      l:'Mythology',   i:'⚡', w:['Zeus','Medusa','Anubis','Valkyrie','Minotaur','Odysseus','Poseidon','Fenrir','Athena','Hades','Loki','Hercules','Sphinx','Cerberus','Odin']},
+  {id:'space',     l:'Space',       i:'🌌', w:['Nebula','Pulsar','Asteroid','Comet','Supernova','Wormhole','Galaxy','Meteor','Dark matter','Event horizon','Magnetar','Red dwarf','Solstice','Aphelion','Cosmos']},
+];
+
+let sel=new Set(['animals','food','places','sports','jobs','fantasy']);
+let nPlayers=5,gs={},curIdx=0,flipped=false;
+
+function calcI(n){if(n<=5)return 1;if(n<=9)return 2;if(n<=14)return 3;return Math.min(4,Math.floor(n/5));}
+function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function ss(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+function buildCats(){
+  const g=document.getElementById('cgrid');
+  g.innerHTML='';
+  CATS.forEach(c=>{
+    const d=document.createElement('div');
+    d.className='cat-chip'+(sel.has(c.id)?' on':'');
+    d.dataset.id=c.id;
+    d.innerHTML=`<span class="cat-ico">${c.i}</span><span>${c.l}</span><span class="cat-chk">${sel.has(c.id)?'✓':''}</span>`;
+    d.onclick=()=>{
+      if(sel.has(c.id)){sel.delete(c.id);d.classList.remove('on');d.querySelector('.cat-chk').textContent='';}
+      else{sel.add(c.id);d.classList.add('on');d.querySelector('.cat-chk').textContent='✓';}
+      updStart();
+    };
+    g.appendChild(d);
+  });
+  updStart();
+}
+
+function updSlider(){
+  const n=+document.getElementById('pslider').value;
+  nPlayers=n;
+  const im=calcI(n);
+  document.getElementById('pnum').textContent=n;
+  document.getElementById('ibig').textContent=im;
+  document.getElementById('iformula').textContent=im+' imposter'+(im>1?'s':'')+' for '+n+' players';
+  document.getElementById('crewcount').textContent=(n-im)+' crewmates';
+  document.getElementById('ipills').innerHTML=Array(im).fill(0).map((_,i)=>`<div class="imp-pill"><span>🕵️</span>Imposter ${i+1}</div>`).join('');
+}
+
+function updStart(){
+  document.getElementById('start-btn').disabled=sel.size===0;
+  document.getElementById('shint').textContent=sel.size===0?'Select at least 1 category to start':`${sel.size} categor${sel.size===1?'y':'ies'} selected — ready!`;
+}
+
+function deal(){
+  const cats=CATS.filter(c=>sel.has(c.id));
+  const cat=cats[Math.floor(Math.random()*cats.length)];
+  const word=cat.w[Math.floor(Math.random()*cat.w.length)];
+  const im=calcI(nPlayers);
+  const roles=Array(nPlayers).fill('crew');
+  shuf([...Array(nPlayers).keys()]).slice(0,im).forEach(i=>roles[i]='imp');
+  gs={cat,word,roles,im,n:nPlayers};
+  curIdx=0;flipped=false;
+}
+
+function buildProg(){
+  const t=document.getElementById('ptrack');
+  t.innerHTML='';
+  for(let i=0;i<gs.n;i++){
+    const d=document.createElement('div');
+    d.className='pdot'+(i===0?' active':'');
+    d.id='pd'+i;
+    t.appendChild(d);
+  }
+}
+
+function showCard(idx){
+  const fw=document.getElementById('fwrap');
+  const cf=document.getElementById('cfront');
+  const role=gs.roles[idx];
+  const isI=role==='imp';
+  fw.classList.remove('flipped');
+  flipped=false;
+  const nb=document.getElementById('next-btn');
+  nb.classList.remove('show');
+  cf.className='cface cfront '+role;
+  cf.innerHTML=isI?
+    `<div class="role-tag">Imposter</div><div class="cface-emoji">🕵️</div><div class="cface-cat">${gs.cat.l}</div><div class="cface-word">???</div><div class="cface-note">You don't know the word — bluff!</div>`:
+    `<div class="role-tag">Crewmate</div><div class="cface-emoji">${gs.cat.i}</div><div class="cface-cat">${gs.cat.l}</div><div class="cface-word">${gs.word}</div><div class="cface-note">Don't let the imposter guess it!</div>`;
+  document.getElementById('cplabel').textContent='Player '+(idx+1);
+  for(let i=0;i<gs.n;i++){
+    const d=document.getElementById('pd'+i);
+    d.className='pdot'+(i<idx?' done':i===idx?' active':'');
+  }
+}
+
+function onTap(){
+  if(!flipped){
+    document.getElementById('fwrap').classList.add('flipped');
+    flipped=true;
+    const nb=document.getElementById('next-btn');
+    nb.classList.add('show');
+    nb.textContent=curIdx===gs.n-1?'▶ Start game':'Next player →';
+  }
+}
+
+function onNext(){
+  if(curIdx===gs.n-1){
+    document.getElementById('pword').textContent=gs.word;
+    document.getElementById('pcat').textContent=gs.cat.l+' · '+gs.cat.i;
+    document.getElementById('st-p').textContent=gs.n;
+    document.getElementById('st-i').textContent=gs.im;
+    document.getElementById('st-c').textContent=gs.n-gs.im;
+    document.getElementById('rtable').classList.remove('open');
+    ss('s-play');
+  } else {
+    curIdx++;
+    showCard(curIdx);
+  }
+}
+
+function revealAll(){
+  const rr=document.getElementById('rrows');
+  rr.innerHTML='';
+  gs.roles.forEach((role,i)=>{
+    const isI=role==='imp';
+    const tr=document.createElement('div');
+    tr.className='rt-row';
+    tr.innerHTML=`<span class="rt-player">Player ${i+1}</span><span class="rt-word">${isI?'???':gs.word}</span><span class="rt-badge ${role}">${isI?'Imposter':'Crewmate'}</span>`;
+    rr.appendChild(tr);
+  });
+  document.getElementById('rtable').classList.add('open');
+}
+
+function startGame(){deal();buildProg();showCard(0);ss('s-cards');}
+
+document.getElementById('pslider').oninput=updSlider;
+document.getElementById('start-btn').onclick=startGame;
+document.getElementById('fwrap').onclick=onTap;
+document.getElementById('next-btn').onclick=onNext;
+document.getElementById('reveal-btn').onclick=revealAll;
+document.getElementById('again-btn').onclick=startGame;
+document.getElementById('reset-btn').onclick=()=>ss('s-setup');
+document.getElementById('all-btn').onclick=()=>{CATS.forEach(c=>sel.add(c.id));buildCats();};
+document.getElementById('none-btn').onclick=()=>{sel.clear();buildCats();};
+
+buildCats();
+updSlider();
+</script>
+
+</body>
+</html>
