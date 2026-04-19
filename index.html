@@ -733,19 +733,14 @@ function toggleOpt(k){
 ═══════════════════════════════════ */
 function showPrivacy(playerIdx, onDone){
   if(!opts.priv){onDone();return;}
-
-  /* Switch to a dedicated privacy screen (not an overlay) */
   ss('s-privacy');
-
-  document.getElementById('priv-title').textContent='PASS THE PHONE';
-  document.getElementById('priv-sub').textContent=`Hand it to ${pName(playerIdx)}`;
+  const isFirst = curIdx === 0;
+  document.getElementById('priv-title').textContent = isFirst ? 'RANDOMLY SELECTED' : 'PASS THE PHONE';
+  document.getElementById('priv-sub').textContent = isFirst
+    ? `🎲 ${pName(playerIdx)} goes first!`
+    : `Hand it to ${pName(playerIdx)}`;
   document.getElementById('priv-btn').textContent=`I'm ${pName(playerIdx)} — Ready →`;
-
-  /* Only after tap: go back to cards screen and THEN inject card content */
-  document.getElementById('priv-btn').onclick=()=>{
-    ss('s-cards');
-    onDone(); /* showCard called here — after screen switch */
-  };
+  document.getElementById('priv-btn').onclick=()=>{ss('s-cards');onDone();};
 }
 
 /* ═══════════════════════════════════
@@ -784,7 +779,12 @@ function showCard(idx){
     cf.innerHTML=`<div class="role-tag">Crewmate</div><div class="cf-emoji">${gs.cat.i}</div><div class="cf-cat">${gs.cat.l}</div><div class="cf-word">${gs.word}</div><div class="cf-note">Don't let the imposter guess!</div>`;
   }
   document.getElementById('cplabel').textContent=pName(idx);
-  for(let i=0;i<gs.n;i++){const d=document.getElementById('pd'+i);d.className='pdot2'+(i<idx?' done':i===idx?' active':'');}
+  // Progress dots show position in the shuffled deal order
+  const pos = curIdx; // curIdx = position in dealOrder
+  for(let i=0;i<gs.n;i++){
+    const d=document.getElementById('pd'+i);
+    d.className='pdot2'+(i<pos?' done':i===pos?' active':'');
+  }
 }
 
 function onTap(){
@@ -793,16 +793,19 @@ function onTap(){
     flipped=true;sfxFlip();
     const nb=document.getElementById('next-btn');
     nb.classList.add('show');
-    nb.textContent=curIdx===gs.n-1?'▶ Start game':'Next player →';
+    const isLast = curIdx===gs.dealOrder.length-1;
+    nb.textContent = isLast ? '▶ Start game' : 'Next player →';
   }
 }
 
 function onNext(){
   sfxNext();
-  if(curIdx===gs.n-1){startPlay();}
-  else{
+  if(curIdx===gs.dealOrder.length-1){
+    startPlay();
+  } else {
     const ni=curIdx+1;
-    showPrivacy(ni,()=>{curIdx=ni;showCard(curIdx);});
+    const playerIdx=gs.dealOrder[ni];
+    showPrivacy(playerIdx,()=>{curIdx=ni;showCard(playerIdx);});
   }
 }
 
@@ -813,8 +816,10 @@ function startGame(){
     document.getElementById('score-bar').classList.add('show');
     document.getElementById('sc-rnd').textContent='Round '+roundNum;
   }
-  // Show privacy for first player
-  showPrivacy(0,()=>showCard(0));
+  // Fully random order — every player in a different position each round
+  gs.dealOrder = shuf([...Array(gs.n).keys()]);
+  curIdx = 0;
+  showPrivacy(gs.dealOrder[0], ()=>showCard(gs.dealOrder[0]));
 }
 
 function startPlay(){
