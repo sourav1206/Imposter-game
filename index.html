@@ -470,36 +470,49 @@ header{padding:1rem 1rem 0}
 
   <div class="screen" id="s-play">
     <div class="play-top"><div class="play-title">GAME ON</div><p class="play-sub">Discuss — then vote to find the imposter!</p></div>
-    <div class="timer-section" id="timer-section" style="display:none">
-      <div class="timer-ring-wrap">
-        <svg width="110" height="110" viewBox="0 0 110 110">
-          <circle class="t-track" cx="55" cy="55" r="48"/>
-          <circle class="t-prog" id="t-prog" cx="55" cy="55" r="48"/>
-        </svg>
-        <div class="timer-center"><div class="timer-num" id="timer-num">90</div><div class="timer-lbl">seconds</div></div>
-      </div>
-      <div class="timer-btns">
-        <button class="tbtn primary" id="tbtn-start" onclick="startTimer()">Start</button>
-        <button class="tbtn" id="tbtn-pause" onclick="pauseTimer()" style="display:none">Pause</button>
-        <button class="tbtn" onclick="resetTimer()">Reset</button>
-      </div>
-    </div>
-    <div class="wrc">
-      <div class="wrc-lbl">The secret word</div>
-      <div class="wrc-word" id="pword">—</div>
-      <div class="wrc-cat" id="pcat">—</div>
-    </div>
-    <div class="stats-row">
-      <div class="sbox"><div class="sbox-v" id="st-p">—</div><div class="sbox-l">Players</div></div>
-      <div class="sbox"><div class="sbox-v" id="st-i" style="color:var(--red)">—</div><div class="sbox-l">Imposters</div></div>
-      <div class="sbox"><div class="sbox-v" id="st-c" style="color:var(--bll)">—</div><div class="sbox-l">Crewmates</div></div>
-    </div>
-    <div class="action-btns">
-      <button class="abtn blue" id="vote-btn" onclick="startVoting()"><span class="ico">🎯</span><div><div>Start Voting</div><div class="abtn-sub">Each player picks their suspect</div></div></button>
-      <button class="abtn red" onclick="showResult(false)"><span class="ico">👁️</span><div><div>Skip to Reveal</div><div class="abtn-sub">Show all roles now</div></div></button>
-      <button class="abtn amber" onclick="startGame()"><span class="ico">🔄</span><div><div>Play again</div><div class="abtn-sub">New round, same settings</div></div></button>
-      <button class="abtn ghost" onclick="goHome()"><span class="ico">⚙️</span><div><div>Change settings</div></div></button>
-    </div>
+
+```
+<!-- FIRST SPEAKER BANNER -->
+<div style="background:linear-gradient(135deg,rgba(247,183,49,0.12),rgba(247,183,49,0.06));border:1px solid rgba(247,183,49,0.3);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:14px">
+  <div style="font-size:36px" id="first-speaker-emoji">😀</div>
+  <div>
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--amb);font-weight:600;margin-bottom:2px">🎲 Speaks first</div>
+    <div style="font-family:var(--fd);font-size:26px;letter-spacing:1px;color:#fac775" id="first-speaker-name">Player 1</div>
+    <div style="font-size:12px;color:var(--mu);margin-top:1px">Say a word related to the topic — but don't give it away!</div>
+  </div>
+</div>
+<div class="timer-section" id="timer-section" style="display:none">
+  <div class="timer-ring-wrap">
+    <svg width="110" height="110" viewBox="0 0 110 110">
+      <circle class="t-track" cx="55" cy="55" r="48"/>
+      <circle class="t-prog" id="t-prog" cx="55" cy="55" r="48"/>
+    </svg>
+    <div class="timer-center"><div class="timer-num" id="timer-num">90</div><div class="timer-lbl">seconds</div></div>
+  </div>
+  <div class="timer-btns">
+    <button class="tbtn primary" id="tbtn-start" onclick="startTimer()">Start</button>
+    <button class="tbtn" id="tbtn-pause" onclick="pauseTimer()" style="display:none">Pause</button>
+    <button class="tbtn" onclick="resetTimer()">Reset</button>
+  </div>
+</div>
+<div class="wrc">
+  <div class="wrc-lbl">The secret word</div>
+  <div class="wrc-word" id="pword">—</div>
+  <div class="wrc-cat" id="pcat">—</div>
+</div>
+<div class="stats-row">
+  <div class="sbox"><div class="sbox-v" id="st-p">—</div><div class="sbox-l">Players</div></div>
+  <div class="sbox"><div class="sbox-v" id="st-i" style="color:var(--red)">—</div><div class="sbox-l">Imposters</div></div>
+  <div class="sbox"><div class="sbox-v" id="st-c" style="color:var(--bll)">—</div><div class="sbox-l">Crewmates</div></div>
+</div>
+<div class="action-btns">
+  <button class="abtn blue" id="vote-btn" onclick="startVoting()"><span class="ico">🎯</span><div><div>Start Voting</div><div class="abtn-sub">Each player picks their suspect</div></div></button>
+  <button class="abtn red" onclick="showResult(false)"><span class="ico">👁️</span><div><div>Skip to Reveal</div><div class="abtn-sub">Show all roles now</div></div></button>
+  <button class="abtn amber" onclick="startGame()"><span class="ico">🔄</span><div><div>Play again</div><div class="abtn-sub">New round, same settings</div></div></button>
+  <button class="abtn ghost" onclick="goHome()"><span class="ico">⚙️</span><div><div>Change settings</div></div></button>
+</div>
+```
+
   </div>
 
   <!-- ══ VOTING ══ -->
@@ -832,6 +845,12 @@ function startPlay(){
   const ts=document.getElementById('timer-section');
   if(opts.timer){ts.style.display='flex';resetTimer();}
   else{ts.style.display='none';}
+
+  // Pick a random player to speak first
+  const firstSpeaker = Math.floor(Math.random() * gs.n);
+  document.getElementById('first-speaker-name').textContent = pName(firstSpeaker);
+  document.getElementById('first-speaker-emoji').textContent = EMOJIS[firstSpeaker];
+
   ss('s-play');
 }
 
