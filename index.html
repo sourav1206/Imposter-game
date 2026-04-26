@@ -41,12 +41,12 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
 .panel{background:var(–surf);border:1px solid var(–b1);border-radius:var(–rl2);padding:1.5rem;position:relative;overflow:hidden;margin-bottom:1rem}
 .panel::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(–red),transparent);opacity:.45}
 .plbl{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(–mu);margin-bottom:.75rem}
-.big-btn{width:100%;padding:15px;border:none;border-radius:var(–rl2);font-family:var(–fd);font-size:22px;letter-spacing:3px;cursor:pointer;transition:all .2s;margin-bottom:8px}
-.big-btn.primary{background:linear-gradient(135deg,var(–red),#c43a39);color:#fff;box-shadow:0 8px 30px rgba(226,75,74,0.3)}
+.big-btn{width:100%;padding:15px;border:none;border-radius:var(–rl2);font-family:var(–fd);font-size:22px;letter-spacing:3px;cursor:pointer;transition:all .2s;margin-bottom:8px;display:block;text-align:center}
+.big-btn.primary{background:linear-gradient(135deg,#e24b4a,#c43a39) !important;color:#fff !important;box-shadow:0 8px 30px rgba(226,75,74,0.3);border:none !important}
 .big-btn.primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(226,75,74,0.45)}
-.big-btn.secondary{background:transparent;border:1.5px solid var(–b2);color:var(–tx)}
-.big-btn.secondary:hover{border-color:var(–red);color:var(–red)}
-.big-btn.green{background:linear-gradient(135deg,var(–grn),#2ec87a);color:#0a0a0f;box-shadow:0 8px 28px rgba(67,232,160,0.25)}
+.big-btn.secondary{background:transparent !important;border:1.5px solid var(–b2) !important;color:var(–tx) !important}
+.big-btn.secondary:hover{border-color:var(–red) !important;color:var(–red) !important}
+.big-btn.green{background:linear-gradient(135deg,var(–grn),#2ec87a) !important;color:#0a0a0f !important;box-shadow:0 8px 28px rgba(67,232,160,0.25);border:none !important}
 .big-btn:disabled{opacity:.35;cursor:not-allowed;transform:none !important;box-shadow:none !important}
 .inp{width:100%;padding:13px 16px;border-radius:var(–r);border:1.5px solid var(–b2);background:var(–surf2);color:var(–tx);font-size:15px;font-family:var(–fb);outline:none;transition:border-color .2s}
 .inp:focus{border-color:var(–red)}
@@ -467,7 +467,16 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   <div id="rematch-status" style="text-align:center;font-size:13px;color:var(--mu);margin-top:.5rem"></div>
 </div>
 
-<button class="big-btn secondary" onclick="leaveGame()" style="margin-top:.5rem">Leave Room</button>
+<!-- Host: same room play again -->
+<div id="host-end-btns" style="display:none;margin-top:.25rem">
+  <button class="big-btn primary" onclick="hostPlayAgainSameRoom()">🔄 Play Again — Same Room</button>
+  <button class="big-btn secondary" onclick="leaveGame()">Leave &amp; End Room</button>
+</div>
+<!-- Player: just leave -->
+<div id="player-end-btns" style="margin-top:.25rem">
+  <div style="text-align:center;padding:.75rem;color:var(--mu);font-size:13px;margin-bottom:.5rem" id="player-end-wait"><span class="spinner"></span>Waiting for host to start next round...</div>
+  <button class="big-btn secondary" onclick="leaveGame()">Leave Room</button>
+</div>
 ```
 
   </div>
@@ -668,7 +677,11 @@ const listenGame=()=>{
     if(s==='playing')onPlaying();
     if(s==='voting')onVoting();
     if(s==='result')onResult();
-    if(s==='lobby'){SS(isHost?'s-lobby-host':'s-lobby-player');setStatus('Back in lobby');}
+    if(s==='lobby'&&gameCode){
+      SS(isHost?'s-lobby-host':'s-lobby-player');
+      setStatus('Back in lobby · '+gameCode,'green');
+      if(!isHost) toast('New round starting! Same code: '+gameCode);
+    }
   });
   // Timer
   listen(ref(db,'games/'+gameCode+'/timerLeft'),snap=>{if(snap.val()!=null){timerLeft=snap.val();updateTimerUI(timerLeft);}});
@@ -903,6 +916,10 @@ const onResult=async()=>{
   // Rematch panel - build with all players
   buildRematchPanel(ps);
 
+  // Show correct end buttons
+  document.getElementById('host-end-btns').style.display = isHost ? 'block' : 'none';
+  document.getElementById('player-end-btns').style.display = isHost ? 'none' : 'block';
+
   SS('s-result');setStatus('Round over!','green');
 };
 
@@ -988,6 +1005,26 @@ window.showForgotWord=()=>{
       <div style="font-size:11px;padding:6px 14px;border-radius:100px;font-weight:500;margin-top:2px;background:${isI?"rgba(226,75,74,0.12)":"rgba(55,138,221,0.1)"};color:${isI?"#f09595":"#85b7eb"}">${isI?"Bluff your way through!":"Don't give it away!"}</div>
     </div>`;
   SS("s-forgot");
+};
+
+/* ═══ PLAY AGAIN SAME ROOM ═══ */
+window.hostPlayAgainSameRoom=async()=>{
+  const psSnap=await get(ref(db,'games/'+gameCode+'/players'));
+  const ps=psSnap.val()||{};
+  const updates={};
+  Object.keys(ps).forEach(id=>{
+    updates['games/'+gameCode+'/players/'+id+'/ready']=false;
+  });
+  updates['games/'+gameCode+'/status']='lobby';
+  updates['games/'+gameCode+'/assignments']=null;
+  updates['games/'+gameCode+'/votes']=null;
+  updates['games/'+gameCode+'/rematch']=null;
+  updates['games/'+gameCode+'/realWord']=null;
+  await update(ref(db),updates);
+  buildCats();
+  SS('s-lobby-host');
+  setStatus('Same room — ready for next round!','green');
+  toast('🎉 Same code: '+gameCode);
 };
 
 /* ═══ LEAVE ═══ */
