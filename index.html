@@ -101,6 +101,9 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
 .cat-chip.on{border-color:var(–red);background:rgba(226,75,74,0.1);color:var(–rl)}
 .cat-chip.on .cat-chk{background:var(–red);border-color:var(–red);color:#fff}
 .link-btn{font-size:12px;color:var(–mu);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(–fb)}
+.imp-pick{padding:6px 16px;border-radius:100px;border:1px solid var(–b2);background:transparent;font-size:13px;font-weight:600;color:var(–mu);cursor:pointer;font-family:var(–fb);transition:all .18s}
+.imp-pick:hover{border-color:var(–red);color:var(–red)}
+.imp-pick.on{background:var(–red);border-color:var(–red);color:#fff}
 
 /* CARD */
 .card-stage{display:flex;flex-direction:column;align-items:center;gap:1.25rem;padding:.5rem 0 1.5rem}
@@ -321,6 +324,23 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
         <div class="opt" id="h-hard" onclick="toggleOpt('hard')"><div class="opt-ico">🔥</div><div><div class="opt-name">Hard Mode</div><div class="opt-desc">Imposter gets fake word</div></div></div>
         <div class="opt on" id="h-timer" onclick="toggleOpt('timer')"><div class="opt-ico">⏱️</div><div><div class="opt-name">Timer</div><div class="opt-desc">90s discussion timer</div></div></div>
         <div class="opt on" id="h-vote" onclick="toggleOpt('vote')"><div class="opt-ico">🎯</div><div><div class="opt-name">Voting</div><div class="opt-desc">Vote on each phone</div></div></div>
+      </div>
+      <!-- Imposter Count -->
+      <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--b1)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem">
+          <div>
+            <div style="font-size:12px;font-weight:600;color:var(--mu)">🕵️ Number of Imposters</div>
+            <div style="font-size:11px;color:var(--di);margin-top:1px" id="imp-auto-hint">Auto (based on players)</div>
+          </div>
+          <div style="font-family:var(--fd);font-size:36px;color:var(--red);letter-spacing:1px;min-width:28px;text-align:center" id="imp-count-display">Auto</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="imp-pick on" data-v="auto" onclick="setImpCount('auto')">Auto</button>
+          <button class="imp-pick" data-v="1" onclick="setImpCount(1)">1</button>
+          <button class="imp-pick" data-v="2" onclick="setImpCount(2)">2</button>
+          <button class="imp-pick" data-v="3" onclick="setImpCount(3)">3</button>
+          <button class="imp-pick" data-v="4" onclick="setImpCount(4)">4</button>
+        </div>
       </div>
     </div>
     <div class="panel">
@@ -557,6 +577,7 @@ const COLORS=['#e24b4a','#378add','#43e8a0','#f7b731','#b47ee8','#ff9a5c','#aaaa
 /* ═══ STATE ═══ */
 let myId=null,myName='',myAvatar='😀',myColor='#e24b4a',gameCode='',isHost=false,gameRef=null;
 let hostOpts={wrongcat:true,hard:false,timer:true,vote:true};
+let hostImpCount='auto'; // 'auto' or a number 1-4
 let hostSel=new Set(['animals','food','places','sports','jobs','home','feelings','transport']);
 let myRole=null,myWord=null,myCat=null,myCatIcon=null;
 let selVote=null,timerIv=null,timerLeft=90,listeners=[];
@@ -620,6 +641,20 @@ const buildCats=()=>{
   });
 };
 window.toggleOpt=k=>{hostOpts[k]=!hostOpts[k];document.getElementById('h-'+k).classList.toggle('on',hostOpts[k]);};
+
+window.setImpCount=v=>{
+  hostImpCount=v;
+  document.querySelectorAll('.imp-pick').forEach(b=>b.classList.toggle('on', b.dataset.v===String(v)));
+  const disp=document.getElementById('imp-count-display');
+  const hint=document.getElementById('imp-auto-hint');
+  if(v==='auto'){
+    disp.textContent='Auto';
+    hint.textContent='Auto (based on player count)';
+  } else {
+    disp.textContent=v;
+    hint.textContent=`Always ${v} imposter${v>1?'s':''}`;
+  }
+};
 document.getElementById('all-btn').onclick=()=>{CATS.forEach(c=>hostSel.add(c.id));buildCats();};
 document.getElementById('none-btn').onclick=()=>{hostSel.clear();buildCats();};
 
@@ -779,7 +814,9 @@ window.hostStart=async()=>{
   const wCat=hostOpts.wrongcat&&others.length?others[Math.floor(Math.random()*others.length)]:cat;
   // Always give imposter a close hint word from the SAME category (never ???)
   const hintWord = getHintWord(cat.id, word);
-  const impSet=new Set(shuf([...Array(n).keys()]).slice(0,calcI(n)));
+  // Use manual imposter count or auto-calculate
+  const impCount = hostImpCount==='auto' ? calcI(n) : Math.min(+hostImpCount, n-1);
+  const impSet=new Set(shuf([...Array(n).keys()]).slice(0,impCount));
   const assignments={};
   ids.forEach((id,i)=>{
     const isI=impSet.has(i);
