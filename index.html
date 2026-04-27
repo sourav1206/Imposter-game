@@ -796,8 +796,11 @@ window.hostStart=async()=>{
       isHint:isI  // flag so card can show "Hint" label
     };
   });
-  const si=Math.floor(Math.random()*n);
-  await update(gameRef,{status:'dealing',assignments,realWord:word,realCat:cat.l,realCatIcon:cat.i,opts:hostOpts,speakerName:ps[ids[si]].name,speakerEmoji:ps[ids[si]].emoji,votes:{},rematch:{},timerLeft:90});
+  // Pick first speaker — must be a crewmate, never an imposter
+  const crewIds = ids.filter((_,i) => !impSet.has(i));
+  const speakerPool = crewIds.length > 0 ? crewIds : ids; // fallback to anyone if somehow all imp
+  const speakerId = speakerPool[Math.floor(Math.random() * speakerPool.length)];
+  await update(gameRef,{status:'dealing',assignments,realWord:word,realCat:cat.l,realCatIcon:cat.i,opts:hostOpts,speakerName:ps[speakerId].name,speakerEmoji:ps[speakerId].emoji,votes:{},rematch:{},timerLeft:90});
 };
 
 /* ═══ DEALING ═══ */
