@@ -521,7 +521,35 @@ const CATS=[
   {id:'fantasy',  l:'Fantasy',   i:'🧙',w:['Dragon','Witch','Giant','Fairy','Wizard','Ghost','Vampire','Zombie','Elf','Troll','Mermaid','Unicorn','Knight','Pirate','Ninja','Alien']},
   {id:'music',    l:'Music',     i:'🎵',w:['Guitar','Drums','Piano','Violin','Trumpet','Flute','Song','Band','Concert','Singer','Rap','Pop','Rock','Jazz','Dance','Mic','Beat']},
 ];
-const FAKES={animals:['Plant','Rock','Cloud','Stone','Shoe'],food:['Paint','Glue','Soap','Clay','Sponge'],drinks:['Soup','Sauce','Oil','Syrup','Lotion'],sports:['Cooking','Reading','Sleeping','Drawing','Singing'],jobs:['Robot','Machine','Computer','Vehicle','Building'],places:['Feeling','Sound','Color','Shape','Smell'],home:['Mountain','River','Forest','Desert','Volcano'],nature:['Sofa','Desk','Lamp','Curtain','Mirror'],clothing:['Food','Tool','Plant','Stone','Cloud'],transport:['Fruit','Vegetable','Animal','Flower','Insect'],body:['Door','Window','Wall','Floor','Ceiling'],feelings:['Color','Shape','Number','Letter','Sound'],school:['Kitchen','Bedroom','Garden','Garage','Attic'],tech:['Tree','Grass','Rock','Leaf','Branch'],fantasy:['Doctor','Farmer','Driver','Builder','Chef'],music:['Sport','Food','Color','Animal','Flower']};
+// HINTS: for each category word, a close-but-different word from the SAME category
+// Imposter always gets a hint — a related word that fits the category but isn't the real one
+const HINTS={
+  animals:  {Dog:'Cat',Cat:'Dog',Lion:'Tiger',Tiger:'Lion',Horse:'Cow',Cow:'Horse',Sheep:'Goat',Rabbit:'Fox',Duck:'Hen',Fish:'Frog',Bird:'Duck',Frog:'Rabbit',Bear:'Wolf',Fox:'Bear',Wolf:'Fox',Monkey:'Bear',Pig:'Sheep',Hen:'Duck',Goat:'Sheep',Deer:'Fox'},
+  food:     {Pizza:'Burger',Burger:'Pizza',Rice:'Bread',Bread:'Rice',Egg:'Pancake',Cake:'Cookie',Soup:'Curry',Pasta:'Noodles',Salad:'Sandwich',Chips:'Fries',Sandwich:'Toast',Noodles:'Pasta',Curry:'Soup','Ice cream':'Cake',Taco:'Sandwich',Pancake:'Toast',Cookie:'Cake',Fries:'Chips',Toast:'Bread',Popcorn:'Chips'},
+  drinks:   {Water:'Juice',Milk:'Lassi',Tea:'Coffee',Coffee:'Tea',Juice:'Soda',Soda:'Juice',Lemonade:'Juice',Smoothie:'Juice',Beer:'Soda',Shake:'Smoothie',Coke:'Soda',Chai:'Tea',Lassi:'Milk','Hot chocolate':'Milk',Buttermilk:'Lassi','Iced tea':'Tea','Coconut water':'Juice'},
+  sports:   {Cricket:'Baseball',Football:'Cricket',Tennis:'Badminton',Swimming:'Diving',Cycling:'Running',Boxing:'Wrestling',Running:'Cycling',Golf:'Cricket',Yoga:'Swimming',Basketball:'Football',Volleyball:'Basketball',Badminton:'Tennis',Wrestling:'Boxing',Surfing:'Swimming',Archery:'Golf'},
+  jobs:     {Doctor:'Nurse',Teacher:'Doctor',Driver:'Pilot',Chef:'Waiter',Nurse:'Doctor',Farmer:'Builder',Police:'Soldier',Pilot:'Driver',Singer:'Actor',Painter:'Builder',Builder:'Painter',Lawyer:'Teacher',Soldier:'Police',Barber:'Waiter',Waiter:'Chef',Actor:'Singer',Dancer:'Singer'},
+  places:   {Beach:'Park',School:'Library',Hospital:'Clinic',Market:'Mall',Airport:'Station',Hotel:'Mall',Temple:'Church',Park:'Beach',Office:'Library',Stadium:'Park',Library:'School',Museum:'Library',Cinema:'Mall',Cafe:'Hotel',Gym:'Stadium',Church:'Temple',Station:'Airport',Mall:'Market',Farm:'Park',Zoo:'Park'},
+  home:     {Bed:'Sofa',Chair:'Sofa',Table:'Desk',Sofa:'Chair',Door:'Window',Window:'Door',Lamp:'Clock',Mirror:'Window',Clock:'Lamp',Fan:'Lamp',Bathroom:'Kitchen',Curtain:'Pillow',Pillow:'Blanket',Blanket:'Pillow',Fridge:'Microwave',TV:'Screen',Kitchen:'Bathroom'},
+  nature:   {Rain:'Snow',Snow:'Rain',Wind:'Rain',Sun:'Moon',Moon:'Sun',Tree:'Flower',Flower:'Tree',River:'Lake',Mountain:'Volcano',Desert:'Island',Forest:'Mountain',Cloud:'Rain',Ocean:'River',Lake:'River',Volcano:'Mountain',Rainbow:'Cloud',Island:'Beach',Waterfall:'River'},
+  clothing: {Shirt:'Jacket',Jeans:'Shorts',Dress:'Skirt',Shoes:'Boots',Hat:'Cap',Socks:'Gloves',Jacket:'Coat',Scarf:'Belt',Belt:'Scarf',Gloves:'Socks',Boots:'Shoes',Shorts:'Jeans',Skirt:'Dress',Coat:'Jacket',Saree:'Dress',Suit:'Jacket',Cap:'Hat',Sandals:'Shoes',Sweater:'Jacket'},
+  transport:{Car:'Bus',Bus:'Car',Train:'Metro',Bike:'Scooter',Ship:'Boat',Plane:'Helicopter',Taxi:'Car',Truck:'Bus',Boat:'Ship',Scooter:'Bike',Helicopter:'Plane',Tractor:'Truck',Cycle:'Bike',Metro:'Train',Ferry:'Boat',Rickshaw:'Taxi'},
+  body:     {Hand:'Foot',Foot:'Hand',Eye:'Ear',Ear:'Eye',Nose:'Mouth',Mouth:'Nose',Hair:'Neck',Teeth:'Tongue',Knee:'Elbow',Shoulder:'Neck',Finger:'Thumb',Stomach:'Chest',Back:'Chest',Chest:'Back',Elbow:'Knee',Tongue:'Mouth',Cheek:'Neck',Neck:'Shoulder',Thumb:'Finger',Heel:'Foot'},
+  feelings: {Happy:'Excited',Sad:'Lonely',Angry:'Nervous',Scared:'Nervous',Bored:'Tired',Excited:'Happy',Tired:'Bored',Hungry:'Bored',Lonely:'Sad',Proud:'Happy',Nervous:'Scared',Jealous:'Angry',Shy:'Nervous',Confused:'Nervous',Surprised:'Excited',Calm:'Happy',Worried:'Nervous',Love:'Happy',Hate:'Angry',Hope:'Happy'},
+  school:   {Book:'Pencil',Pen:'Pencil',Pencil:'Pen',Ruler:'Eraser',Eraser:'Ruler',Bag:'Book',Desk:'Chair',Board:'Chalk',Chalk:'Board',Exam:'Homework',Homework:'Exam',Bell:'Clock',Lunch:'Book',Playground:'Park',Library:'Book',Crayon:'Pencil'},
+  tech:     {Phone:'Laptop',Laptop:'Phone',Camera:'Phone',TV:'Screen',Radio:'Speaker',Speaker:'Radio',Charger:'Cable',App:'Game',Game:'App',Password:'Screen',Screen:'TV',Keyboard:'Mouse',Mouse:'Keyboard',Printer:'Scanner',Robot:'Drone',Drone:'Robot',WiFi:'Charger'},
+  fantasy:  {Dragon:'Unicorn',Witch:'Wizard',Giant:'Troll',Fairy:'Elf',Wizard:'Witch',Ghost:'Vampire',Vampire:'Ghost',Zombie:'Ghost',Elf:'Fairy',Troll:'Giant',Mermaid:'Fairy',Unicorn:'Dragon',Knight:'Ninja',Pirate:'Knight',Ninja:'Knight',Alien:'Robot'},
+  music:    {Guitar:'Violin',Drums:'Guitar',Piano:'Violin',Violin:'Guitar',Trumpet:'Flute',Flute:'Trumpet',Song:'Beat',Band:'Concert',Concert:'Band',Singer:'Rapper',Rap:'Beat',Pop:'Rock',Rock:'Pop',Jazz:'Blues',Dance:'Beat',Mic:'Speaker',Beat:'Rhythm'},
+};
+// Fallback: pick a different word from same category
+const getHintWord=(catId,realWord)=>{
+  const map=HINTS[catId];
+  if(map&&map[realWord])return map[realWord];
+  // Fallback: random word from same category that isn't the real word
+  const cat=CATS.find(c=>c.id===catId);
+  if(cat){const others=cat.w.filter(w=>w!==realWord);if(others.length)return others[Math.floor(Math.random()*others.length)];}
+  return '???';
+};
 
 const AVATARS=['😀','😎','🤠','🥸','😈','👻','🤖','🐱','🐸','🦊','🐼','🐯','🦁','🐻','🐨','🦄','🐲','👽','🤡','🧸','🦸','🧙','🧟','🧛','🧝','🎅','🤴','👸','🥷','🕵️'];
 const COLORS=['#e24b4a','#378add','#43e8a0','#f7b731','#b47ee8','#ff9a5c','#aaaaaa','#ff6b9d','#4ac8e8','#80e878','#e24b4a','#378add','#43e8a0','#f7b731','#b47ee8','#ff9a5c','#aaaaaa','#ff6b9d','#4ac8e8','#80e878','#e24b4a','#378add','#43e8a0','#f7b731','#b47ee8','#ff9a5c','#aaaaaa','#ff6b9d','#4ac8e8','#80e878'];
@@ -749,13 +777,24 @@ window.hostStart=async()=>{
   const word=cat.w[Math.floor(Math.random()*cat.w.length)];
   const others=CATS.filter(c=>c.id!==cat.id);
   const wCat=hostOpts.wrongcat&&others.length?others[Math.floor(Math.random()*others.length)]:cat;
-  const fp=FAKES[cat.id]||['???'];
-  const fw=hostOpts.hard?fp[Math.floor(Math.random()*fp.length)]:'???';
+  // Always give imposter a close hint word from the SAME category (never ???)
+  const hintWord = getHintWord(cat.id, word);
   const impSet=new Set(shuf([...Array(n).keys()]).slice(0,calcI(n)));
   const assignments={};
   ids.forEach((id,i)=>{
     const isI=impSet.has(i);
-    assignments[id]={role:isI?'imp':'crew',word:isI?(hostOpts.hard?fw:'???'):word,cat:isI?(hostOpts.wrongcat?wCat.l:cat.l):cat.l,catIcon:isI?(hostOpts.wrongcat?wCat.i:cat.i):cat.i,isImp:isI};
+    // Imposter word: if wrongcat mode use hint from wrong cat, else hint from real cat
+    const impWord = hostOpts.wrongcat
+      ? getHintWord(wCat.id, wCat.w[Math.floor(Math.random()*wCat.w.length)])
+      : hintWord;
+    assignments[id]={
+      role:isI?'imp':'crew',
+      word:isI?impWord:word,
+      cat:isI?(hostOpts.wrongcat?wCat.l:cat.l):cat.l,
+      catIcon:isI?(hostOpts.wrongcat?wCat.i:cat.i):cat.i,
+      isImp:isI,
+      isHint:isI  // flag so card can show "Hint" label
+    };
   });
   const si=Math.floor(Math.random()*n);
   await update(gameRef,{status:'dealing',assignments,realWord:word,realCat:cat.l,realCatIcon:cat.i,opts:hostOpts,speakerName:ps[ids[si]].name,speakerEmoji:ps[ids[si]].emoji,votes:{},rematch:{},timerLeft:90});
@@ -771,8 +810,13 @@ const onDealing=async()=>{
   const cf=document.getElementById('mc-front');
   cf.className='card-side c-front '+(myRole==='imp'?'imp':'crew');
   cf.innerHTML=myRole==='imp'
-    ?`<div class="role-tag">Imposter</div><div class="cf-emoji">🕵️</div><div class="cf-cat">${a.cat}</div><div class="cf-word">${a.word}</div><div class="cf-note">${data.opts?.wrongcat?'Wrong category!':'Bluff!'}</div>`
-    :`<div class="role-tag">Crewmate</div><div class="cf-emoji">${a.catIcon}</div><div class="cf-cat">${a.cat}</div><div class="cf-word">${a.word}</div><div class="cf-note">Don't give it away!</div>`;
+    ?`<div class="role-tag">Imposter</div>
+      <div class="cf-emoji">🕵️</div>
+      <div class="cf-cat">${a.cat}</div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(240,149,149,0.6);margin-bottom:2px;font-weight:600">YOUR HINT WORD</div>
+      <div class="cf-word">${a.word}</div>
+      <div class="cf-note">Same category — close but not the real word!</div>`
+    :`<div class="role-tag">Crewmate</div><div class="cf-emoji">${a.catIcon}</div><div class="cf-cat">${a.cat}</div><div class="cf-word">${a.word}</div><div class="cf-note">Don't let the imposter guess!</div>`;
   document.getElementById('mc-box').classList.remove('flipped');
   document.getElementById('ready-btn').style.display='none';
   document.getElementById('ready-wait').style.display='none';
@@ -1000,9 +1044,10 @@ window.showForgotWord=()=>{
     <div style="width:240px;border-radius:20px;padding:1.75rem;display:flex;flex-direction:column;align-items:center;gap:8px;background:${isI?"linear-gradient(160deg,#2a0f0f,#3d1515)":"linear-gradient(160deg,#0d1f35,#142d4a)"};border:2px solid ${isI?"rgba(226,75,74,0.6)":"rgba(55,138,221,0.5)"}">
       <div style="font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:4px;background:${isI?"rgba(226,75,74,0.2)":"rgba(55,138,221,0.2)"};color:${isI?"#ffbbbb":"#c8dff5"};border:1px solid ${isI?"rgba(226,75,74,0.4)":"rgba(55,138,221,0.35)"}">${isI?"Imposter":"Crewmate"}</div>
       <div style="font-size:48px;line-height:1.2">${isI?"🕵️":myCatIcon||myAvatar}</div>
-      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${isI?"rgba(240,149,149,0.65)":"rgba(133,183,235,0.65)"}">${myCat||"—"}</div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${isI?"rgba(240,149,149,0.5)":"rgba(133,183,235,0.65)"}">${isI?"YOUR HINT WORD":myCat||"—"}</div>
+      ${isI?`<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(240,149,149,0.4)">${myCat||""}</div>`:""}
       <div style="font-family:'Bebas Neue',cursive;font-size:46px;letter-spacing:2px;line-height:1;text-align:center;color:${isI?"#ffbbbb":"#c8dff5"}">${myWord||"???"}</div>
-      <div style="font-size:11px;padding:6px 14px;border-radius:100px;font-weight:500;margin-top:2px;background:${isI?"rgba(226,75,74,0.12)":"rgba(55,138,221,0.1)"};color:${isI?"#f09595":"#85b7eb"}">${isI?"Bluff your way through!":"Don't give it away!"}</div>
+      <div style="font-size:11px;padding:6px 14px;border-radius:100px;font-weight:500;margin-top:2px;background:${isI?"rgba(226,75,74,0.12)":"rgba(55,138,221,0.1)"};color:${isI?"#f09595":"#85b7eb"}">${isI?"Same category — close but not the real word!":"Don't give it away!"}</div>
     </div>`;
   SS("s-forgot");
 };
