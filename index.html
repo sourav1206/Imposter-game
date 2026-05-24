@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -29,8 +28,8 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 /* HEADER */
 header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:var(–fd);font-size:26px;letter-spacing:3px;background:linear-gradient(135deg,var(–red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer}
-.hbadge{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(–grn);padding:5px 12px;border-radius:100px;border:1px solid rgba(67,232,160,0.25);background:rgba(67,232,160,0.07)}
+.logo{font-family:var(--fd);font-size:26px;letter-spacing:3px;background:linear-gradient(135deg,var(--red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer}
+.hbadge{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--grn);padding:5px 12px;border-radius:100px;border:1px solid rgba(67,232,160,0.25);background:rgba(67,232,160,0.07)}
 
 /* SCREENS */
 .screen{display:none;width:100%;max-width:560px;padding:1.25rem 1.5rem;animation:sIn .4s cubic-bezier(.16,1,.3,1)}
@@ -38,72 +37,72 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
 @keyframes sIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* COMMON */
-.panel{background:var(–surf);border:1px solid var(–b1);border-radius:var(–rl2);padding:1.5rem;position:relative;overflow:hidden;margin-bottom:1rem}
-.panel::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(–red),transparent);opacity:.45}
-.plbl{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(–mu);margin-bottom:.75rem}
-.big-btn{width:100%;padding:15px;border:none;border-radius:var(–rl2);font-family:var(–fd);font-size:22px;letter-spacing:3px;cursor:pointer;transition:all .2s;margin-bottom:8px;display:block;text-align:center}
+.panel{background:var(--surf);border:1px solid var(--b1);border-radius:var(--rl2);padding:1.5rem;position:relative;overflow:hidden;margin-bottom:1rem}
+.panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent);opacity:.45}
+.plbl{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:.75rem}
+.big-btn{width:100%;padding:15px;border:none;border-radius:var(--rl2);font-family:var(--fd);font-size:22px;letter-spacing:3px;cursor:pointer;transition:all .2s;margin-bottom:8px;display:block;text-align:center}
 .big-btn.primary{background:linear-gradient(135deg,#e24b4a,#c43a39) !important;color:#fff !important;box-shadow:0 8px 30px rgba(226,75,74,0.3);border:none !important}
 .big-btn.primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(226,75,74,0.45)}
-.big-btn.secondary{background:transparent !important;border:1.5px solid var(–b2) !important;color:var(–tx) !important}
-.big-btn.secondary:hover{border-color:var(–red) !important;color:var(–red) !important}
-.big-btn.green{background:linear-gradient(135deg,var(–grn),#2ec87a) !important;color:#0a0a0f !important;box-shadow:0 8px 28px rgba(67,232,160,0.25);border:none !important}
+.big-btn.secondary{background:transparent !important;border:1.5px solid var(--b2) !important;color:var(--tx) !important}
+.big-btn.secondary:hover{border-color:var(--red) !important;color:var(--red) !important}
+.big-btn.green{background:linear-gradient(135deg,var(--grn),#2ec87a) !important;color:#0a0a0f !important;box-shadow:0 8px 28px rgba(67,232,160,0.25);border:none !important}
 .big-btn:disabled{opacity:.35;cursor:not-allowed;transform:none !important;box-shadow:none !important}
-.inp{width:100%;padding:13px 16px;border-radius:var(–r);border:1.5px solid var(–b2);background:var(–surf2);color:var(–tx);font-size:15px;font-family:var(–fb);outline:none;transition:border-color .2s}
-.inp:focus{border-color:var(–red)}
-.inp::placeholder{color:var(–di)}
+.inp{width:100%;padding:13px 16px;border-radius:var(--r);border:1.5px solid var(--b2);background:var(--surf2);color:var(--tx);font-size:15px;font-family:var(--fb);outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--red)}
+.inp::placeholder{color:var(--di)}
 .inp.code{text-transform:uppercase;letter-spacing:4px;text-align:center;font-size:18px}
-.abtn{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(–r);border:1px solid;cursor:pointer;font-size:14px;font-weight:500;font-family:var(–fb);transition:all .18s;text-align:left;background:transparent;width:100%;margin-bottom:8px}
+.abtn{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r);border:1px solid;cursor:pointer;font-size:14px;font-weight:500;font-family:var(--fb);transition:all .18s;text-align:left;background:transparent;width:100%;margin-bottom:8px}
 .abtn .ico{font-size:18px;flex-shrink:0}
 .abtn-sub{font-size:11px;opacity:.6;margin-top:1px}
-.abtn.red{border-color:rgba(226,75,74,0.3);color:var(–rl)}.abtn.red:hover{background:rgba(226,75,74,0.08);border-color:var(–red)}
-.abtn.blue{border-color:rgba(55,138,221,0.3);color:var(–bll)}.abtn.blue:hover{background:rgba(55,138,221,0.08);border-color:var(–blu)}
-.abtn.green{border-color:rgba(67,232,160,0.3);color:var(–grn)}.abtn.green:hover{background:rgba(67,232,160,0.07);border-color:var(–grn)}
-.abtn.ghost{border-color:var(–b2);color:var(–mu)}.abtn.ghost:hover{color:var(–tx);background:var(–surf)}
-.abtn.amber{border-color:rgba(247,183,49,0.3);color:#fac775}.abtn.amber:hover{background:rgba(247,183,49,0.07);border-color:var(–amb)}
+.abtn.red{border-color:rgba(226,75,74,0.3);color:var(--rl)}.abtn.red:hover{background:rgba(226,75,74,0.08);border-color:var(--red)}
+.abtn.blue{border-color:rgba(55,138,221,0.3);color:var(--bll)}.abtn.blue:hover{background:rgba(55,138,221,0.08);border-color:var(--blu)}
+.abtn.green{border-color:rgba(67,232,160,0.3);color:var(--grn)}.abtn.green:hover{background:rgba(67,232,160,0.07);border-color:var(--grn)}
+.abtn.ghost{border-color:var(--b2);color:var(--mu)}.abtn.ghost:hover{color:var(--tx);background:var(--surf)}
+.abtn.amber{border-color:rgba(247,183,49,0.3);color:#fac775}.abtn.amber:hover{background:rgba(247,183,49,0.07);border-color:var(--amb)}
 
 /* HOME */
-.home-title{font-family:var(–fd);font-size:clamp(68px,18vw,116px);letter-spacing:4px;line-height:.9;background:linear-gradient(160deg,#fff 0%,var(–rl) 40%,var(–red) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.home-title{font-family:var(--fd);font-size:clamp(68px,18vw,116px);letter-spacing:4px;line-height:.9;background:linear-gradient(160deg,#fff 0%,var(--rl) 40%,var(--red) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* AVATAR PICKER */
 .avatar-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:1rem}
-.av-btn{width:100%;aspect-ratio:1;border-radius:12px;border:2px solid var(–b2);background:var(–surf2);font-size:24px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.av-btn{width:100%;aspect-ratio:1;border-radius:12px;border:2px solid var(--b2);background:var(--surf2);font-size:24px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
 .av-btn:hover{border-color:rgba(226,75,74,0.5);transform:scale(1.08)}
-.av-btn.selected{border-color:var(–red);background:rgba(226,75,74,0.12);transform:scale(1.1);box-shadow:0 0 12px var(–rg)}
+.av-btn.selected{border-color:var(--red);background:rgba(226,75,74,0.12);transform:scale(1.1);box-shadow:0 0 12px var(--rg)}
 
 /* GAME CODE */
-.gcd{text-align:center;padding:1.5rem;background:var(–surf2);border-radius:var(–r);margin-bottom:1rem}
-.gcd-lbl{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(–di);margin-bottom:.4rem}
-.gcd-code{font-family:var(–fd);font-size:56px;letter-spacing:8px;background:linear-gradient(135deg,var(–red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.gcd{text-align:center;padding:1.5rem;background:var(--surf2);border-radius:var(--r);margin-bottom:1rem}
+.gcd-lbl{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--di);margin-bottom:.4rem}
+.gcd-code{font-family:var(--fd);font-size:56px;letter-spacing:8px;background:linear-gradient(135deg,var(--red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 
 /* PLAYERS LIST */
 .players-list{display:flex;flex-direction:column;gap:7px;margin-bottom:.75rem}
-.prow{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(–surf2);border-radius:var(–r);border:1px solid var(–b1);animation:sIn .3s ease}
+.prow{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--surf2);border-radius:var(--r);border:1px solid var(--b1);animation:sIn .3s ease}
 .pavatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .pbadge{font-size:10px;font-weight:600;padding:2px 9px;border-radius:100px;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
-.pbadge.host{background:rgba(247,183,49,0.15);color:var(–amb);border:1px solid rgba(247,183,49,0.3)}
-.pbadge.ready{background:rgba(67,232,160,0.12);color:var(–grn);border:1px solid rgba(67,232,160,0.25)}
-.pbadge.wait{background:rgba(255,255,255,0.05);color:var(–di);border:1px solid var(–b1)}
-.pbadge.kick{padding:2px 8px;background:rgba(226,75,74,0.12);color:var(–rl);border:1px solid rgba(226,75,74,0.25);cursor:pointer}
+.pbadge.host{background:rgba(247,183,49,0.15);color:var(--amb);border:1px solid rgba(247,183,49,0.3)}
+.pbadge.ready{background:rgba(67,232,160,0.12);color:var(--grn);border:1px solid rgba(67,232,160,0.25)}
+.pbadge.wait{background:rgba(255,255,255,0.05);color:var(--di);border:1px solid var(--b1)}
+.pbadge.kick{padding:2px 8px;background:rgba(226,75,74,0.12);color:var(--rl);border:1px solid rgba(226,75,74,0.25);cursor:pointer}
 
 /* OPTIONS */
 .opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
-.opt{padding:10px 12px;border-radius:12px;border:1px solid var(–b2);background:var(–surf2);cursor:pointer;transition:all .18s;display:flex;align-items:flex-start;gap:9px;user-select:none}
-.opt.on{border-color:var(–red);background:rgba(226,75,74,0.1)}
+.opt{padding:10px 12px;border-radius:12px;border:1px solid var(--b2);background:var(--surf2);cursor:pointer;transition:all .18s;display:flex;align-items:flex-start;gap:9px;user-select:none}
+.opt.on{border-color:var(--red);background:rgba(226,75,74,0.1)}
 .opt-ico{font-size:19px;flex-shrink:0;margin-top:1px}
-.opt-name{font-size:12px;font-weight:500;color:var(–mu)}.opt.on .opt-name{color:var(–rl)}
-.opt-desc{font-size:10px;color:var(–di);margin-top:1px}
+.opt-name{font-size:12px;font-weight:500;color:var(--mu)}.opt.on .opt-name{color:var(--rl)}
+.opt-desc{font-size:10px;color:var(--di);margin-top:1px}
 
 /* CATS */
 .cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px;margin-bottom:.75rem}
-.cat-chip{padding:8px 10px;border-radius:10px;border:1px solid var(–b2);background:var(–surf2);font-size:12px;font-weight:500;color:var(–mu);cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:7px;user-select:none}
+.cat-chip{padding:8px 10px;border-radius:10px;border:1px solid var(--b2);background:var(--surf2);font-size:12px;font-weight:500;color:var(--mu);cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:7px;user-select:none}
 .cat-ico{font-size:15px;flex-shrink:0}
-.cat-chk{width:13px;height:13px;border-radius:50%;border:1.5px solid var(–b2);margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px}
-.cat-chip.on{border-color:var(–red);background:rgba(226,75,74,0.1);color:var(–rl)}
-.cat-chip.on .cat-chk{background:var(–red);border-color:var(–red);color:#fff}
-.link-btn{font-size:12px;color:var(–mu);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(–fb)}
-.imp-pick{padding:6px 16px;border-radius:100px;border:1px solid var(–b2);background:transparent;font-size:13px;font-weight:600;color:var(–mu);cursor:pointer;font-family:var(–fb);transition:all .18s}
-.imp-pick:hover{border-color:var(–red);color:var(–red)}
-.imp-pick.on{background:var(–red);border-color:var(–red);color:#fff}
+.cat-chk{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--b2);margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px}
+.cat-chip.on{border-color:var(--red);background:rgba(226,75,74,0.1);color:var(--rl)}
+.cat-chip.on .cat-chk{background:var(--red);border-color:var(--red);color:#fff}
+.link-btn{font-size:12px;color:var(--mu);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--fb)}
+.imp-pick{padding:6px 16px;border-radius:100px;border:1px solid var(--b2);background:transparent;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;font-family:var(--fb);transition:all .18s}
+.imp-pick:hover{border-color:var(--red);color:var(--red)}
+.imp-pick.on{background:var(--red);border-color:var(--red);color:#fff}
 
 /* CARD */
 .card-stage{display:flex;flex-direction:column;align-items:center;gap:1.25rem;padding:.5rem 0 1.5rem}
@@ -113,10 +112,10 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
 .c-front{opacity:0;transform:scale(.93);pointer-events:none;z-index:1}
 .card-box.flipped .c-back{opacity:0;transform:scale(.93);pointer-events:none;z-index:1}
 .card-box.flipped .c-front{opacity:1;transform:scale(1);pointer-events:auto;z-index:2}
-.c-back{background:var(–surf);border:1px solid var(–b2);gap:12px;overflow:hidden}
+.c-back{background:var(--surf);border:1px solid var(--b2);gap:12px;overflow:hidden}
 .cback-mesh{position:absolute;inset:0;border-radius:20px;background-image:repeating-linear-gradient(45deg,transparent 0,transparent 20px,rgba(255,255,255,0.015) 20px,rgba(255,255,255,0.015) 21px),repeating-linear-gradient(-45deg,transparent 0,transparent 20px,rgba(255,255,255,0.015) 20px,rgba(255,255,255,0.015) 21px)}
-.cback-logo{font-family:var(–fd);font-size:40px;letter-spacing:4px;background:linear-gradient(135deg,var(–red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1}
-.cback-sub,.tap-hint{font-size:11px;color:var(–di);letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1}
+.cback-logo{font-family:var(--fd);font-size:40px;letter-spacing:4px;background:linear-gradient(135deg,var(--red),#ff9a9a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1}
+.cback-sub,.tap-hint{font-size:11px;color:var(--di);letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1}
 .tap-hint{animation:blink 2.5s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
 .c-front{gap:7px;padding:1.5rem}
@@ -128,57 +127,57 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
 .cf-emoji{font-size:44px;line-height:1;margin:3px 0}
 .cf-cat{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:1px}
 .crew .cf-cat{color:rgba(133,183,235,0.65)}.imp .cf-cat{color:rgba(240,149,149,0.65)}
-.cf-word{font-family:var(–fd);font-size:44px;letter-spacing:2px;line-height:1;text-align:center}
+.cf-word{font-family:var(--fd);font-size:44px;letter-spacing:2px;line-height:1;text-align:center}
 .crew .cf-word{color:#c8dff5}.imp .cf-word{color:#ffbbbb}
 .cf-note{font-size:11px;margin-top:5px;padding:5px 12px;border-radius:100px;font-weight:500;text-align:center}
 .crew .cf-note{background:rgba(55,138,221,0.1);color:#85b7eb}.imp .cf-note{background:rgba(226,75,74,0.12);color:#f09595}
 
 /* LEADERBOARD */
-.lb-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(–r);background:var(–surf2);margin-bottom:6px;border:1px solid var(–b1)}
-.lb-rank{font-family:var(–fd);font-size:20px;width:28px;flex-shrink:0;text-align:center}
+.lb-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r);background:var(--surf2);margin-bottom:6px;border:1px solid var(--b1)}
+.lb-rank{font-family:var(--fd);font-size:20px;width:28px;flex-shrink:0;text-align:center}
 .lb-name{flex:1;font-weight:500;font-size:14px}
 .lb-stats{display:flex;gap:10px;align-items:center}
 .lb-stat{text-align:center}
-.lb-sv{font-family:var(–fd);font-size:18px;line-height:1}
-.lb-sl{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(–di)}
+.lb-sv{font-family:var(--fd);font-size:18px;line-height:1}
+.lb-sl{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--di)}
 
 /* CHAT */
-.chat-panel{background:var(–surf);border:1px solid var(–b1);border-radius:var(–rl2);overflow:hidden;margin-bottom:1rem}
-.chat-header{padding:.75rem 1rem;border-bottom:1px solid var(–b1);display:flex;align-items:center;justify-content:space-between}
+.chat-panel{background:var(--surf);border:1px solid var(--b1);border-radius:var(--rl2);overflow:hidden;margin-bottom:1rem}
+.chat-header{padding:.75rem 1rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between}
 .chat-messages{height:200px;overflow-y:auto;padding:.75rem;display:flex;flex-direction:column;gap:6px}
 .chat-messages::-webkit-scrollbar{width:3px}
 .chat-messages::-webkit-scrollbar-track{background:transparent}
-.chat-messages::-webkit-scrollbar-thumb{background:var(–b2);border-radius:2px}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
 .chat-msg{display:flex;gap:8px;align-items:flex-start;animation:sIn .2s ease}
 .chat-msg.mine{flex-direction:row-reverse}
 .chat-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .chat-bubble{max-width:75%;padding:7px 11px;border-radius:14px;font-size:13px;line-height:1.4}
-.chat-bubble.theirs{background:var(–surf2);border:1px solid var(–b1);border-top-left-radius:4px}
+.chat-bubble.theirs{background:var(--surf2);border:1px solid var(--b1);border-top-left-radius:4px}
 .chat-bubble.mine{background:rgba(226,75,74,0.15);border:1px solid rgba(226,75,74,0.25);border-top-right-radius:4px}
-.chat-name{font-size:10px;color:var(–di);margin-bottom:2px}
-.chat-system{text-align:center;font-size:11px;color:var(–di);padding:2px 0}
-.chat-input-row{display:flex;gap:8px;padding:.75rem;border-top:1px solid var(–b1)}
-.chat-inp{flex:1;padding:9px 13px;border-radius:100px;border:1px solid var(–b2);background:var(–surf2);color:var(–tx);font-size:13px;font-family:var(–fb);outline:none}
-.chat-inp:focus{border-color:var(–red)}
-.chat-send{padding:9px 16px;border-radius:100px;background:var(–red);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:var(–fb);transition:opacity .15s}
+.chat-name{font-size:10px;color:var(--di);margin-bottom:2px}
+.chat-system{text-align:center;font-size:11px;color:var(--di);padding:2px 0}
+.chat-input-row{display:flex;gap:8px;padding:.75rem;border-top:1px solid var(--b1)}
+.chat-inp{flex:1;padding:9px 13px;border-radius:100px;border:1px solid var(--b2);background:var(--surf2);color:var(--tx);font-size:13px;font-family:var(--fb);outline:none}
+.chat-inp:focus{border-color:var(--red)}
+.chat-send{padding:9px 16px;border-radius:100px;background:var(--red);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--fb);transition:opacity .15s}
 .chat-send:hover{opacity:.85}
-.chat-badge{background:var(–red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center}
+.chat-badge{background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center}
 .chat-badge.show{display:flex}
 
 /* VOTE */
 .vote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:1.25rem}
-.vote-card{padding:13px;border-radius:14px;border:1.5px solid var(–b2);background:var(–surf);cursor:pointer;text-align:center;transition:all .2s;user-select:none}
+.vote-card{padding:13px;border-radius:14px;border:1.5px solid var(--b2);background:var(--surf);cursor:pointer;text-align:center;transition:all .2s;user-select:none}
 .vote-card:hover{border-color:rgba(226,75,74,0.5);background:rgba(226,75,74,0.06)}
-.vote-card.selected{border-color:var(–red);background:rgba(226,75,74,0.12)}
+.vote-card.selected{border-color:var(--red);background:rgba(226,75,74,0.12)}
 .vote-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 7px}
 
 /* REMATCH */
 .rematch-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
-.rematch-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(–surf2);border-radius:var(–r);border:1px solid var(–b1)}
+.rematch-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surf2);border-radius:var(--r);border:1px solid var(--b1)}
 .rematch-vote-btns{display:flex;gap:6px}
-.rvbtn{padding:5px 14px;border-radius:100px;border:1px solid var(–b2);background:transparent;font-size:12px;font-weight:600;cursor:pointer;font-family:var(–fb);transition:all .18s}
-.rvbtn.yes{border-color:rgba(67,232,160,0.4);color:var(–grn)}.rvbtn.yes:hover,.rvbtn.yes.on{background:rgba(67,232,160,0.12);border-color:var(–grn)}
-.rvbtn.no{border-color:rgba(226,75,74,0.35);color:var(–rl)}.rvbtn.no:hover,.rvbtn.no.on{background:rgba(226,75,74,0.1);border-color:var(–red)}
+.rvbtn{padding:5px 14px;border-radius:100px;border:1px solid var(--b2);background:transparent;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--fb);transition:all .18s}
+.rvbtn.yes{border-color:rgba(67,232,160,0.4);color:var(--grn)}.rvbtn.yes:hover,.rvbtn.yes.on{background:rgba(67,232,160,0.12);border-color:var(--grn)}
+.rvbtn.no{border-color:rgba(226,75,74,0.35);color:var(--rl)}.rvbtn.no:hover,.rvbtn.no.on{background:rgba(226,75,74,0.1);border-color:var(--red)}
 
 /* RESULT */
 .result-emoji{font-size:64px;display:block;text-align:center;margin-bottom:.5rem;animation:bounce .6s ease}
@@ -186,47 +185,46 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
 
 /* TABS */
 .tab-row{display:flex;gap:6px;margin-bottom:1rem}
-.tab-btn{padding:7px 16px;border-radius:100px;border:1px solid var(–b2);background:transparent;font-size:13px;font-weight:600;color:var(–mu);cursor:pointer;font-family:var(–fb);transition:all .18s}
-.tab-btn.on{background:var(–red);border-color:var(–red);color:#fff}
+.tab-btn{padding:7px 16px;border-radius:100px;border:1px solid var(--b2);background:transparent;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;font-family:var(--fb);transition:all .18s}
+.tab-btn.on{background:var(--red);border-color:var(--red);color:#fff}
 .tab-pane{display:none}.tab-pane.active{display:block;animation:sIn .3s ease}
 
 /* STATUS / TIMER / MISC */
 .status-bar{width:100%;max-width:560px;padding:.5rem 1.5rem 0}
-.spill{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:100px;font-size:12px;font-weight:500;background:var(–surf);border:1px solid var(–b1)}
+.spill{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:100px;font-size:12px;font-weight:500;background:var(--surf);border:1px solid var(--b1)}
 .sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.sdot.green{background:var(–grn);box-shadow:0 0 6px var(–grn);animation:pulse 1.5s infinite}
-.sdot.amber{background:var(–amb);animation:pulse 1.5s infinite}
+.sdot.green{background:var(--grn);box-shadow:0 0 6px var(--grn);animation:pulse 1.5s infinite}
+.sdot.amber{background:var(--amb);animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(–surf);border:1px solid var(–b2);border-radius:100px;padding:10px 20px;font-size:14px;font-weight:500;z-index:9999;transition:transform .3s cubic-bezier(.16,1,.3,1);white-space:nowrap;max-width:90vw;text-align:center}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surf);border:1px solid var(--b2);border-radius:100px;padding:10px 20px;font-size:14px;font-weight:500;z-index:9999;transition:transform .3s cubic-bezier(.16,1,.3,1);white-space:nowrap;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0)}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(–b2);border-top-color:var(–red);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--b2);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.wrc{background:var(–surf);border:1px solid var(–b1);border-radius:var(–rl2);padding:1.25rem;text-align:center;margin-bottom:1rem;position:relative;overflow:hidden}
-.wrc::after{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(226,75,74,0.05),transparent 60%);pointer-events:none}
-.wrc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(–di);margin-bottom:4px}
-.wrc-word{font-family:var(–fd);font-size:52px;letter-spacing:3px;line-height:1;background:linear-gradient(135deg,var(–tx),rgba(240,238,232,0.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.wrc-cat{font-size:12px;color:var(–mu);margin-top:4px}
+.wrc{background:var(--surf);border:1px solid var(--b1);border-radius:var(--rl2);padding:1.25rem;text-align:center;margin-bottom:1rem;position:relative;overflow:hidden}
+.wrc::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(226,75,74,0.05),transparent 60%);pointer-events:none}
+.wrc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--di);margin-bottom:4px}
+.wrc-word{font-family:var(--fd);font-size:52px;letter-spacing:3px;line-height:1;background:linear-gradient(135deg,var(--tx),rgba(240,238,232,0.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.wrc-cat{font-size:12px;color:var(--mu);margin-top:4px}
 .timer-wrap{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-bottom:1.25rem}
 .timer-ring{position:relative;width:96px;height:96px}
 .timer-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
-.t-track{fill:none;stroke:var(–surf2);stroke-width:6}
+.t-track{fill:none;stroke:var(--surf2);stroke-width:6}
 .t-prog{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke .5s}
 .timer-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.timer-num{font-family:var(–fd);font-size:28px;letter-spacing:1px;line-height:1}
-.timer-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(–di)}
-.rt-head{padding:.75rem 1.25rem;border-bottom:1px solid var(–b1);font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(–di);display:grid;grid-template-columns:1fr auto auto;gap:.75rem}
-.rt-row{padding:.75rem 1.25rem;border-bottom:1px solid var(–b1);display:grid;grid-template-columns:1fr auto auto;gap:.75rem;align-items:center;font-size:13px}
+.timer-num{font-family:var(--fd);font-size:28px;letter-spacing:1px;line-height:1}
+.timer-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--di)}
+.rt-head{padding:.75rem 1.25rem;border-bottom:1px solid var(--b1);font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--di);display:grid;grid-template-columns:1fr auto auto;gap:.75rem}
+.rt-row{padding:.75rem 1.25rem;border-bottom:1px solid var(--b1);display:grid;grid-template-columns:1fr auto auto;gap:.75rem;align-items:center;font-size:13px}
 .rt-row:last-child{border-bottom:none}
 .rt-row:nth-child(even){background:rgba(255,255,255,0.013)}
 .rt-badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:100px;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
-.rt-badge.imp{background:rgba(226,75,74,0.15);color:var(–rl);border:1px solid rgba(226,75,74,0.3)}
-.rt-badge.crew{background:rgba(55,138,221,0.12);color:var(–bll);border:1px solid rgba(55,138,221,0.25)}
+.rt-badge.imp{background:rgba(226,75,74,0.15);color:var(--rl);border:1px solid rgba(226,75,74,0.3)}
+.rt-badge.crew{background:rgba(55,138,221,0.12);color:var(--bll);border:1px solid rgba(55,138,221,0.25)}
 .conf-wrap{position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden}
 .conf{position:absolute;width:8px;height:8px;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 @media(max-width:500px){.screen{padding:1rem}header{padding:1rem 1rem 0}.gcd-code{font-size:44px}.card-box{width:255px;height:295px}.cf-word{font-size:38px}}
 </style>
-
 </head>
 <body>
 <div class="orb o1"></div><div class="orb o2"></div>
@@ -242,7 +240,6 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- HOME -->
-
   <div class="screen active" id="s-home">
     <div style="text-align:center;padding:2rem 0 1.5rem">
       <div class="home-title">IMPOSTER</div>
@@ -257,7 +254,6 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- CREATE -->
-
   <div class="screen" id="s-create">
     <div style="text-align:center;margin-bottom:1.5rem;padding-top:.5rem">
       <div style="font-family:var(--fd);font-size:38px;letter-spacing:3px">CREATE GAME</div>
@@ -276,7 +272,6 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- JOIN -->
-
   <div class="screen" id="s-join">
     <div style="text-align:center;margin-bottom:1.5rem;padding-top:.5rem">
       <div style="font-family:var(--fd);font-size:38px;letter-spacing:3px">JOIN GAME</div>
@@ -299,7 +294,6 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- LOBBY HOST -->
-
   <div class="screen" id="s-lobby-host">
     <div class="gcd">
       <div class="gcd-lbl">Share this code</div>
@@ -343,24 +337,11 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
         </div>
       </div>
     </div>
-    <div class="panel">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
-        <div class="plbl" style="margin:0">Categories</div>
-        <div style="display:flex;gap:8px"><button class="link-btn" id="all-btn">All</button><button class="link-btn" id="none-btn">None</button></div>
-      </div>
-      <div class="cats-grid" id="h-cats"></div>
-    </div>
-    <!-- Custom Words -->
-    <div class="panel">
-      <div class="plbl">Custom Words <span style="font-weight:400;color:var(--di)">(optional — added to pool)</span></div>
-      <textarea id="custom-words-inp" placeholder="Enter custom words separated by commas e.g. Eiffel Tower, Cricket bat, Mango shake" style="width:100%;padding:10px 13px;border-radius:var(--r);border:1.5px solid var(--b2);background:var(--surf2);color:var(--tx);font-size:13px;font-family:var(--fb);outline:none;resize:none;height:72px;line-height:1.5" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--b2)'"></textarea>
-    </div>
     <button class="big-btn primary" id="start-btn" onclick="hostStart()" disabled>START GAME</button>
     <button class="big-btn secondary" onclick="leaveGame()">Leave Room</button>
   </div>
 
   <!-- LOBBY PLAYER -->
-
   <div class="screen" id="s-lobby-player">
     <div class="gcd">
       <div class="gcd-lbl">Game Code</div>
@@ -376,7 +357,6 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- MY CARD -->
-
   <div class="screen" id="s-mycard">
     <div style="text-align:center;margin-bottom:.75rem">
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--di);margin-bottom:3px">Your secret card</div>
@@ -393,7 +373,6 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- PLAY -->
-
   <div class="screen" id="s-play">
     <div style="text-align:center;margin-bottom:1rem">
       <div style="font-family:var(--fd);font-size:42px;letter-spacing:3px;line-height:1;margin-bottom:2px">GAME ON</div>
@@ -439,7 +418,6 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- VOTE -->
-
   <div class="screen" id="s-vote">
     <div style="text-align:center;margin-bottom:1rem">
       <div style="font-family:var(--fd);font-size:42px;letter-spacing:3px;line-height:1;margin-bottom:2px">VOTE</div>
@@ -453,56 +431,51 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
   </div>
 
   <!-- RESULT -->
-
   <div class="screen" id="s-result">
     <span class="result-emoji" id="r-emoji">🎉</span>
     <div style="font-family:var(--fd);font-size:48px;letter-spacing:3px;line-height:1;text-align:center;margin-bottom:.2rem" id="r-title">CREW WINS</div>
     <p style="font-size:15px;color:var(--mu);text-align:center;margin-bottom:1.25rem" id="r-msg">—</p>
 
-```
-<div class="tab-row">
-  <button class="tab-btn on" onclick="showTab('t-result',this)">Result</button>
-  <button class="tab-btn" onclick="showTab('t-lb',this)">🏆 Leaderboard</button>
-</div>
+    <div class="tab-row">
+      <button class="tab-btn on" onclick="showTab('t-result',this)">Result</button>
+      <button class="tab-btn" onclick="showTab('t-lb',this)">🏆 Leaderboard</button>
+    </div>
 
-<div class="tab-pane active" id="t-result">
-  <div class="wrc"><div class="wrc-lbl">Secret word</div><div class="wrc-word" id="r-word">—</div><div class="wrc-cat" id="r-cat">—</div></div>
-  <div style="background:var(--surf);border:1px solid var(--b1);border-radius:var(--rl2);overflow:hidden;margin-bottom:1rem">
-    <div class="rt-head"><span>Player</span><span>Votes</span><span>Role</span></div>
-    <div id="r-rows"></div>
-  </div>
-</div>
+    <div class="tab-pane active" id="t-result">
+      <div class="wrc"><div class="wrc-lbl">Secret word</div><div class="wrc-word" id="r-word">—</div><div class="wrc-cat" id="r-cat">—</div></div>
+      <div style="background:var(--surf);border:1px solid var(--b1);border-radius:var(--rl2);overflow:hidden;margin-bottom:1rem">
+        <div class="rt-head"><span>Player</span><span>Votes</span><span>Role</span></div>
+        <div id="r-rows"></div>
+      </div>
+    </div>
 
-<div class="tab-pane" id="t-lb">
-  <div class="panel" style="padding:1rem">
-    <div class="plbl">Session Leaderboard</div>
-    <div id="lb-list"></div>
-  </div>
-</div>
+    <div class="tab-pane" id="t-lb">
+      <div class="panel" style="padding:1rem">
+        <div class="plbl">Session Leaderboard</div>
+        <div id="lb-list"></div>
+      </div>
+    </div>
 
-<!-- Rematch -->
-<div class="panel" id="rematch-panel">
-  <div class="plbl">Rematch Vote</div>
-  <div class="rematch-grid" id="rematch-grid"></div>
-  <div id="rematch-status" style="text-align:center;font-size:13px;color:var(--mu);margin-top:.5rem"></div>
-</div>
+    <!-- Rematch -->
+    <div class="panel" id="rematch-panel">
+      <div class="plbl">Rematch Vote</div>
+      <div class="rematch-grid" id="rematch-grid"></div>
+      <div id="rematch-status" style="text-align:center;font-size:13px;color:var(--mu);margin-top:.5rem"></div>
+    </div>
 
-<!-- Host: same room play again -->
-<div id="host-end-btns" style="display:none;margin-top:.25rem">
-  <button class="big-btn primary" onclick="hostPlayAgainSameRoom()">🔄 Play Again — Same Room</button>
-  <button class="big-btn secondary" onclick="leaveGame()">Leave &amp; End Room</button>
-</div>
-<!-- Player: just leave -->
-<div id="player-end-btns" style="margin-top:.25rem">
-  <div style="text-align:center;padding:.75rem;color:var(--mu);font-size:13px;margin-bottom:.5rem" id="player-end-wait"><span class="spinner"></span>Waiting for host to start next round...</div>
-  <button class="big-btn secondary" onclick="leaveGame()">Leave Room</button>
-</div>
-```
-
+    <!-- Host: same room play again -->
+    <div id="host-end-btns" style="display:none;margin-top:.25rem">
+      <button class="big-btn primary" onclick="hostPlayAgainSameRoom()">🔄 Play Again — Same Room</button>
+      <button class="big-btn secondary" onclick="leaveGame()">Leave &amp; End Room</button>
+    </div>
+    <!-- Player: just leave -->
+    <div id="player-end-btns" style="margin-top:.25rem">
+      <div style="text-align:center;padding:.75rem;color:var(--mu);font-size:13px;margin-bottom:.5rem" id="player-end-wait"><span class="spinner"></span>Waiting for host to start next round...</div>
+      <button class="big-btn secondary" onclick="leaveGame()">Leave Room</button>
+    </div>
   </div>
 
   <!-- FORGOT WORD -->
-
   <div class="screen" id="s-forgot">
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center">
       <div style="font-size:48px;margin-bottom:.75rem">🤔</div>
@@ -522,25 +495,51 @@ import { firebaseConfig } from "./firebase-config.js";
 const app = initializeApp(firebaseConfig);
 const db  = getDatabase(app);
 
-/* ═══ WORD LISTS ═══ */
+/* ═══ WORD LISTS — ALL AUTO SELECTED, FULLY RANDOM ═══ */
 const CATS=[
-  {id:'animals',  l:'Animals',   i:'🐾',w:['Dog','Cat','Lion','Tiger','Horse','Cow','Sheep','Rabbit','Duck','Fish','Bird','Frog','Bear','Fox','Wolf','Monkey','Pig','Hen','Goat','Deer']},
-  {id:'food',     l:'Food',      i:'🍕',w:['Pizza','Burger','Rice','Bread','Egg','Cake','Soup','Pasta','Salad','Chips','Sandwich','Noodles','Curry','Taco','Pancake','Cookie','Fries','Toast','Ice cream','Popcorn']},
-  {id:'drinks',   l:'Drinks',    i:'🥤',w:['Water','Milk','Tea','Coffee','Juice','Soda','Lemonade','Smoothie','Beer','Shake','Coke','Chai','Lassi','Hot chocolate','Buttermilk','Iced tea','Coconut water']},
-  {id:'sports',   l:'Sports',    i:'⚽',w:['Cricket','Football','Tennis','Swimming','Cycling','Boxing','Running','Golf','Yoga','Basketball','Volleyball','Badminton','Wrestling','Surfing','Archery']},
-  {id:'jobs',     l:'Jobs',      i:'💼',w:['Doctor','Teacher','Driver','Chef','Nurse','Farmer','Police','Pilot','Singer','Painter','Builder','Lawyer','Soldier','Barber','Waiter','Actor','Dancer']},
-  {id:'places',   l:'Places',    i:'🌍',w:['Beach','School','Hospital','Market','Airport','Hotel','Temple','Park','Office','Stadium','Library','Museum','Cinema','Cafe','Gym','Station','Mall','Zoo']},
-  {id:'home',     l:'Home',      i:'🏠',w:['Bed','Chair','Table','Sofa','Door','Window','Lamp','Mirror','Clock','Fan','Bathroom','Curtain','Pillow','Blanket','Fridge','TV','Kitchen']},
-  {id:'nature',   l:'Nature',    i:'🌿',w:['Rain','Snow','Wind','Sun','Moon','Tree','Flower','River','Mountain','Desert','Forest','Cloud','Ocean','Lake','Volcano','Rainbow','Island']},
-  {id:'clothing', l:'Clothing',  i:'👗',w:['Shirt','Jeans','Dress','Shoes','Hat','Socks','Jacket','Scarf','Belt','Gloves','Boots','Shorts','Skirt','Coat','Saree','Suit','Cap']},
-  {id:'transport',l:'Transport', i:'🚗',w:['Car','Bus','Train','Bike','Ship','Plane','Taxi','Truck','Boat','Scooter','Helicopter','Tractor','Cycle','Metro','Ferry','Rickshaw']},
-  {id:'body',     l:'Body',      i:'💪',w:['Hand','Foot','Eye','Ear','Nose','Mouth','Hair','Teeth','Knee','Shoulder','Finger','Stomach','Back','Chest','Elbow','Tongue','Neck']},
-  {id:'feelings', l:'Feelings',  i:'😊',w:['Happy','Sad','Angry','Scared','Bored','Excited','Tired','Hungry','Lonely','Proud','Nervous','Jealous','Shy','Confused','Surprised','Calm']},
-  {id:'school',   l:'School',    i:'📚',w:['Book','Pen','Pencil','Ruler','Eraser','Bag','Desk','Board','Chalk','Exam','Homework','Bell','Lunch','Playground','Library','Crayon']},
-  {id:'tech',     l:'Tech',      i:'💻',w:['Phone','Laptop','Camera','TV','Radio','Speaker','Charger','App','Game','Password','Screen','Keyboard','Mouse','Printer','Robot','Drone','WiFi']},
-  {id:'fantasy',  l:'Fantasy',   i:'🧙',w:['Dragon','Witch','Giant','Fairy','Wizard','Ghost','Vampire','Zombie','Elf','Troll','Mermaid','Unicorn','Knight','Pirate','Ninja','Alien']},
-  {id:'music',    l:'Music',     i:'🎵',w:['Guitar','Drums','Piano','Violin','Trumpet','Flute','Song','Band','Concert','Singer','Rap','Pop','Rock','Jazz','Dance','Mic','Beat']},
+  {id:'animals',    l:'Animals',          i:'🐾',w:['Dog','Cat','Lion','Tiger','Horse','Cow','Sheep','Rabbit','Duck','Fish','Bird','Frog','Bear','Fox','Wolf','Monkey','Pig','Hen','Goat','Deer','Elephant','Giraffe','Zebra','Penguin','Crocodile','Parrot','Camel','Kangaroo','Panda','Cheetah','Hippo','Gorilla','Dolphin','Shark','Eagle','Flamingo','Peacock','Koala','Leopard','Rhino']},
+  {id:'food',       l:'Food',             i:'🍕',w:['Pizza','Burger','Rice','Bread','Egg','Cake','Soup','Pasta','Salad','Chips','Sandwich','Noodles','Curry','Taco','Pancake','Cookie','Fries','Toast','Ice cream','Popcorn','Sushi','Dosa','Idli','Biryani','Samosa','Pav Bhaji','Chole Bhature','Dal Makhani','Butter Chicken','Paneer','Halwa','Jalebi','Paratha','Khichdi','Upma','Puri','Vada Pav','Dhokla','Pani Puri','Rajma']},
+  {id:'drinks',     l:'Drinks',           i:'🥤',w:['Water','Milk','Tea','Coffee','Juice','Soda','Lemonade','Smoothie','Beer','Shake','Coke','Chai','Lassi','Hot chocolate','Buttermilk','Iced tea','Coconut water','Thandai','Sharbat','Aam Panna','Jaljeera','Nimbu Pani','Cold coffee','Masala chai','Sugarcane juice','Bael sherbet','Rose milk','Badam milk','Chhaas','Ganne ka ras']},
+  {id:'sports',     l:'Sports',           i:'⚽',w:['Cricket','Football','Tennis','Swimming','Cycling','Boxing','Running','Golf','Yoga','Basketball','Volleyball','Badminton','Wrestling','Surfing','Archery','Kabaddi','Kho-Kho','Hockey','Table tennis','Polo','Snooker','Gymnastics','Weightlifting','Javelin','High jump','Marathon','Triathlon','Rowing','Skiing','Ice skating']},
+  {id:'jobs',       l:'Jobs',             i:'💼',w:['Doctor','Teacher','Driver','Chef','Nurse','Farmer','Police','Pilot','Singer','Painter','Builder','Lawyer','Soldier','Barber','Waiter','Actor','Dancer','Engineer','Scientist','Journalist','Photographer','Architect','Plumber','Electrician','Carpenter','Tailor','Fisherman','Astronaut','Judge','Accountant']},
+  {id:'places',     l:'Places',           i:'🌍',w:['Beach','School','Hospital','Market','Airport','Hotel','Temple','Park','Office','Stadium','Library','Museum','Cinema','Cafe','Gym','Station','Mall','Zoo','Palace','Fort','Mosque','Church','Gurudwara','Police station','Fire station','Bank','Post office','Pharmacy','Barbershop','Bakery']},
+  {id:'home',       l:'Home',             i:'🏠',w:['Bed','Chair','Table','Sofa','Door','Window','Lamp','Mirror','Clock','Fan','Bathroom','Curtain','Pillow','Blanket','Fridge','TV','Kitchen','Balcony','Staircase','Washing machine','Microwave','Dining table','Bookshelf','Wardrobe','Ceiling','Floor','Wall','Switchboard','Doorbell','Mailbox']},
+  {id:'nature',     l:'Nature',           i:'🌿',w:['Rain','Snow','Wind','Sun','Moon','Tree','Flower','River','Mountain','Desert','Forest','Cloud','Ocean','Lake','Volcano','Rainbow','Island','Waterfall','Cave','Glacier','Tsunami','Earthquake','Tornado','Hurricane','Lightning','Fog','Dew','Frost','Hail','Tide']},
+  {id:'clothing',   l:'Clothing',         i:'👗',w:['Shirt','Jeans','Dress','Shoes','Hat','Socks','Jacket','Scarf','Belt','Gloves','Boots','Shorts','Skirt','Coat','Saree','Suit','Cap','Kurta','Dhoti','Dupatta','Lehenga','Sherwani','Salwar','Hoodie','Sweater','Blazer','Tracksuit','Swimsuit','Raincoat','Pyjama']},
+  {id:'transport',  l:'Transport',        i:'🚗',w:['Car','Bus','Train','Bike','Ship','Plane','Taxi','Truck','Boat','Scooter','Helicopter','Tractor','Cycle','Metro','Ferry','Rickshaw','Auto','Ambulance','Fire truck','Submarine','Rocket','Hovercraft','Cable car','Monorail','Tram','Jeep','Van','Bulldozer','Crane','Hot air balloon']},
+  {id:'body',       l:'Body',             i:'💪',w:['Hand','Foot','Eye','Ear','Nose','Mouth','Hair','Teeth','Knee','Shoulder','Finger','Stomach','Back','Chest','Elbow','Tongue','Neck','Thumb','Heel','Wrist','Ankle','Spine','Lung','Heart','Brain','Liver','Kidney','Muscle','Bone','Skin']},
+  {id:'feelings',   l:'Feelings',         i:'😊',w:['Happy','Sad','Angry','Scared','Bored','Excited','Tired','Hungry','Lonely','Proud','Nervous','Jealous','Shy','Confused','Surprised','Calm','Disgusted','Hopeful','Grateful','Guilty','Ashamed','Embarrassed','Confident','Anxious','Depressed','Overjoyed','Irritated','Relieved','Curious','Nostalgic']},
+  {id:'school',     l:'School',           i:'📚',w:['Book','Pen','Pencil','Ruler','Eraser','Bag','Desk','Board','Chalk','Exam','Homework','Bell','Lunch','Playground','Library','Crayon','Notebook','Compass','Calculator','Globe','Projector','Science lab','Timetable','Report card','Uniform','Assembly','Sports day','Tuition','Principal','Detention']},
+  {id:'tech',       l:'Tech',             i:'💻',w:['Phone','Laptop','Camera','TV','Radio','Speaker','Charger','App','Game','Password','Screen','Keyboard','Mouse','Printer','Robot','Drone','WiFi','Bluetooth','USB','Hard disk','Webcam','Smartwatch','Earphones','Tablet','VR headset','SIM card','Memory card','Power bank','Smart TV','QR code']},
+  {id:'fantasy',    l:'Fantasy',          i:'🧙',w:['Dragon','Witch','Giant','Fairy','Wizard','Ghost','Vampire','Zombie','Elf','Troll','Mermaid','Unicorn','Knight','Pirate','Ninja','Alien','Werewolf','Demon','Angel','Phoenix','Centaur','Minotaur','Griffin','Goblin','Djinn','Sorcerer','Dark lord','Time traveler','Shapeshifter','Oracle']},
+  {id:'music',      l:'Music',            i:'🎵',w:['Guitar','Drums','Piano','Violin','Trumpet','Flute','Song','Band','Concert','Singer','Rap','Pop','Rock','Jazz','Dance','Mic','Beat','Sitar','Tabla','Harmonium','Melody','Chorus','Album','Playlist','DJ','Remix','Ringtone','Anthem','Lullaby','Opera']},
+  {id:'objects',    l:'Daily Objects',    i:'🖊️',w:['Pen','Earbuds','Wallet','Charger','Scissors','Umbrella','Mirror','Watch','Lighter','Stapler','Tape','Notebook','Keychain','Comb','Toothbrush','Soap','Towel','Hanger','Scale','Torch','Calculator','Thermos','Lunchbox','Sunglasses','Rubber band','Paper clip','Envelope','Stamp','Dustbin','Mousepad']},
+  {id:'bollywood',  l:'Bollywood',        i:'🎬',w:['Dilwale','Sholay','Dangal','Bajrangi Bhaijaan','DDLJ','Lagaan','3 Idiots','Deewar','Mughal-E-Azam','Padmaavat','Gangs of Wasseypur','Andhadhun','Article 15','Uri','Gully Boy','Kabhi Khushi Kabhie Gham','Kal Ho Naa Ho','Taare Zameen Par','Queen','Pink','Dil Dhadakne Do','Zindagi Na Milegi Dobara','Dev D','Rockstar','Barfi','Highway','Ganpat','Welcome','Hera Pheri','Golmaal']},
+  {id:'superheroes',l:'Superheroes',      i:'🦸',w:['Spider-Man','Batman','Superman','Iron Man','Thor','Hulk','Black Panther','Wonder Woman','Flash','Aquaman','Captain America','Wolverine','Deadpool','Doctor Strange','Shazam','Green Lantern','Hawkeye','Black Widow','Ant-Man','Vision','Scarlet Witch','Groot','Rocket','Star-Lord','Cyborg','Nightwing','Robin','Shaktimaan','Krrish','G.One']},
+  {id:'countries',  l:'Countries',        i:'🌐',w:['India','USA','Japan','Brazil','France','Germany','Australia','Canada','China','Russia','Italy','Spain','Mexico','Egypt','South Africa','UK','Pakistan','Sri Lanka','Nepal','Bangladesh','Thailand','Indonesia','Malaysia','UAE','Saudi Arabia','Turkey','Argentina','Nigeria','Kenya','New Zealand']},
+  {id:'fruits',     l:'Fruits',           i:'🍎',w:['Mango','Apple','Banana','Grapes','Watermelon','Pineapple','Strawberry','Orange','Papaya','Guava','Lychee','Pomegranate','Kiwi','Peach','Cherry','Pear','Plum','Apricot','Fig','Date','Jackfruit','Custard apple','Dragon fruit','Passion fruit','Avocado','Coconut','Mulberry','Sapota','Tamarind','Amla']},
+  {id:'vegetables', l:'Vegetables',       i:'🥦',w:['Onion','Potato','Tomato','Carrot','Spinach','Cauliflower','Brinjal','Peas','Garlic','Ginger','Cabbage','Cucumber','Pumpkin','Radish','Beetroot','Bitter gourd','Bottle gourd','Lady finger','Capsicum','Corn','Mushroom','Zucchini','Asparagus','Leek','Celery','Artichoke','Sweet potato','Yam','Taro','Drumstick']},
+  {id:'apps',       l:'Apps & Games',     i:'📱',w:['WhatsApp','Instagram','YouTube','Snapchat','TikTok','Netflix','Spotify','Google Maps','Uber','Zomato','PUBG','Minecraft','Roblox','Chess','Candy Crush','Swiggy','Ola','Paytm','GPay','Amazon','Flipkart','LinkedIn','Twitter','Pinterest','Telegram','Zoom','Discord','Duolingo','Shazam','Truecaller']},
+  {id:'celebrities',l:'Celebrities',      i:'⭐',w:['Shah Rukh Khan','Virat Kohli','Priyanka Chopra','Sachin Tendulkar','Ranveer Singh','Deepika Padukone','MS Dhoni','Alia Bhatt','Akshay Kumar','Rohit Sharma','Hrithik Roshan','Katrina Kaif','Amitabh Bachchan','Sonu Nigam','AR Rahman','Salman Khan','Ranbir Kapoor','Anushka Sharma','KL Rahul','Hardik Pandya','Nora Fatehi','Diljit Dosanjh','Badshah','Guru Randhawa','Udit Narayan','Lata Mangeshkar','Kishore Kumar','Rekha','Madhuri Dixit','Aishwarya Rai']},
+  {id:'emojis',     l:'Emoji',            i:'😂',w:['😂 Laughing','🔥 Fire','❤️ Heart','😍 Heart eyes','🙏 Namaste','👏 Clapping','😭 Crying','💀 Dead','🤣 ROFL','😎 Cool','🥺 Pleading','✨ Sparkle','🎉 Party','💯 Hundred','🤔 Thinking','😤 Huffing','🤯 Mind blown','🥳 Celebrating','😴 Sleeping','🤮 Disgusted']},
+  {id:'holidays',   l:'Holidays',         i:'🏖️',w:['Beach','Mountain','Safari','Camping','Cruise','Road trip','Backpacking','Skiing','Hiking','City tour','Spa resort','Jungle stay','Island','Desert camp','Theme park','Heritage walk','River rafting','Scuba diving','Paragliding','Bungee jumping','Hot air balloon','Wildlife reserve','Pilgrimage','Honeymoon','Family vacation','Solo trip','Food tour','Music festival','Snow trip','Houseboat']},
+  {id:'crimes',     l:'Crime & Mystery',  i:'🔍',w:['Murder','Robbery','Kidnapping','Fraud','Hacking','Smuggling','Arson','Forgery','Blackmail','Stalking','Bribery','Theft','Espionage','Hijacking','Vandalism','Identity theft','Money laundering','Drug trafficking','Counterfeiting','Poaching','Cybercrime','Hit and run','Extortion','Bomb threat','Pickpocketing','Shoplifting','Trespassing','Insider trading','Tax evasion','Witness tampering']},
+  {id:'phobias',    l:'Phobias',          i:'😱',w:['Heights','Spiders','Darkness','Water','Crowds','Flying','Dogs','Thunder','Blood','Needles','Clowns','Fire','Germs','Open spaces','Closed spaces','Snakes','Deep water','Mirrors','Hospitals','Death','Being alone','Loud noises','Vomiting','Driving','Public speaking','Bees','Bridges','Elevators','Dolls','The dark']},
+  {id:'household',  l:'Household Chores', i:'🧹',w:['Sweeping','Mopping','Washing dishes','Ironing','Cooking','Vacuuming','Dusting','Grocery shopping','Doing laundry','Taking out trash','Cleaning toilet','Watering plants','Making bed','Folding clothes','Scrubbing','Unclogging drain','Fixing bulb','Painting walls','Cutting grass','Washing car','Cleaning fan','Defrosting fridge','Sorting recycling','Polishing shoes','Repairing tap','Changing bedsheets','Clearing clutter','Sanitizing surfaces','Oiling hinges','Pest control']},
+  {id:'college',    l:'College Life',     i:'🎓',w:['Assignment','Deadline','Canteen','Hostel','Exam','Backlog','Attendance','Internship','Project','Semester','Fresher','Bunking','Professor','Lab','Placement','Study group','Night out','Cafeteria','Crush','Best friend','Ragging','Farewell','Annual fest','Sports day','Hackathon','Debate','Cultural event','Viva','Thesis','Job offer']},
+  {id:'relationships',l:'Relationships',  i:'💕',w:['Crush','Breakup','First date','Marriage','Proposal','Jealousy','Friendship','Ghosting','Long distance','Flirting','Argument','Making up','Anniversary','Cheating','Commitment','Situationship','Talking stage','Red flag','Green flag','Breadcrumbing','Love bombing','Trust issues','Moving on','Exes','Double texting','Match on app','Friend zone','Overthinking','Confessing','Setting boundaries']},
+  {id:'food_places', l:'Food Places',     i:'🍽️',w:['McDonald\'s','KFC','Dominos','Subway','Pizza Hut','Burger King','Haldiram','Barbeque Nation','Wow Momo','Chai Point','Starbucks','CCD','Dunkin','Natural Ice Cream','Baskin Robbins','Amul','Mother Dairy','Wagh Bakri','Lijjat Papad','MTR']},
+  {id:'ipl',         l:'IPL Teams',       i:'🏏',w:['Mumbai Indians','Chennai Super Kings','Royal Challengers Bangalore','Kolkata Knight Riders','Delhi Capitals','Punjab Kings','Rajasthan Royals','Sunrisers Hyderabad','Gujarat Titans','Lucknow Super Giants']},
+  {id:'weather',     l:'Weather',         i:'🌤️',w:['Sunny','Cloudy','Rainy','Windy','Foggy','Snowy','Humid','Hailstorm','Thunderstorm','Drizzle','Blizzard','Heatwave','Cold wave','Cyclone','Monsoon','Hazy','Partly cloudy','Clear sky','Overcast','Stormy']},
+  {id:'actions',     l:'Actions',         i:'🏃',w:['Running','Jumping','Swimming','Climbing','Dancing','Singing','Cooking','Reading','Writing','Drawing','Sleeping','Eating','Laughing','Crying','Fighting','Hugging','Waving','Pointing','Clapping','Whistling']},
+  {id:'school_subjects',l:'Subjects',     i:'📐',w:['Mathematics','Science','History','Geography','English','Hindi','Physics','Chemistry','Biology','Economics','Political science','Computer science','Art','Physical education','Music','Philosophy','Psychology','Sociology','Sanskrit','French']},
+  {id:'superpowers', l:'Superpowers',     i:'⚡',w:['Flying','Invisibility','Teleportation','Mind reading','Super strength','Time travel','Shapeshifting','Healing','Fire control','Ice control','Lightning','Super speed','X-ray vision','Telekinesis','Underwater breathing','Force field','Mind control','Cloning','Shrinking','Growing giant']},
+  {id:'wedding',     l:'Indian Wedding',  i:'💍',w:['Mehendi','Haldi','Sangeet','Baraat','Varmala','Mandap','Pheras','Bidaai','Reception','Invite card','Wedding lehenga','Sherwani','DJ night','Catering','Decoration','Cake cutting','Honeymoon','Pandit','Ring ceremony','Trousseau']},
+  {id:'diwali',      l:'Festivals',       i:'🪔',w:['Diwali','Holi','Eid','Christmas','Navratri','Dussehra','Rakhi','Janmashtami','Onam','Pongal','Baisakhi','Lohri','Ganesh Chaturthi','Durga Puja','Basant Panchami','Muharram','Good Friday','Guru Nanak Jayanti','Makar Sankranti','Mahashivratri']},
+  {id:'dance',       l:'Dance Styles',    i:'💃',w:['Bharatanatyam','Kathak','Bhangra','Garba','Dandiya','Hip hop','Ballet','Salsa','Tango','Breakdance','Contemporary','Odissi','Kuchipudi','Mohiniyattam','Manipuri','Freestyle','Disco','Jive','Waltz','Floss']},
+  {id:'social_media',l:'Social Media',    i:'📲',w:['Like','Comment','Share','Follow','Unfollow','Story','Reel','Post','Caption','Hashtag','Tag','DM','Block','Mute','Archive','Trending','Viral','Influencer','Collab','Swipe up']},
 ];
+
 // HINTS: for each category word, a close-but-different word from the SAME category
 // Imposter always gets a hint — a related word that fits the category but isn't the real one
 const HINTS={
@@ -560,6 +559,21 @@ const HINTS={
   tech:     {Phone:'Laptop',Laptop:'Phone',Camera:'Phone',TV:'Screen',Radio:'Speaker',Speaker:'Radio',Charger:'Cable',App:'Game',Game:'App',Password:'Screen',Screen:'TV',Keyboard:'Mouse',Mouse:'Keyboard',Printer:'Scanner',Robot:'Drone',Drone:'Robot',WiFi:'Charger'},
   fantasy:  {Dragon:'Unicorn',Witch:'Wizard',Giant:'Troll',Fairy:'Elf',Wizard:'Witch',Ghost:'Vampire',Vampire:'Ghost',Zombie:'Ghost',Elf:'Fairy',Troll:'Giant',Mermaid:'Fairy',Unicorn:'Dragon',Knight:'Ninja',Pirate:'Knight',Ninja:'Knight',Alien:'Robot'},
   music:    {Guitar:'Violin',Drums:'Guitar',Piano:'Violin',Violin:'Guitar',Trumpet:'Flute',Flute:'Trumpet',Song:'Beat',Band:'Concert',Concert:'Band',Singer:'Rapper',Rap:'Beat',Pop:'Rock',Rock:'Pop',Jazz:'Blues',Dance:'Beat',Mic:'Speaker',Beat:'Rhythm'},
+  objects:  {Pen:'Pencil',Earbuds:'Headphones',Wallet:'Purse',Charger:'Cable',Scissors:'Knife',Umbrella:'Raincoat',Mirror:'Glass',Watch:'Clock',Lighter:'Match',Stapler:'Clip',Tape:'Glue',Notebook:'Diary',Keychain:'Keys',Comb:'Brush',Toothbrush:'Comb',Soap:'Shampoo',Towel:'Cloth',Hanger:'Hook',Scale:'Ruler',Torch:'Lamp'},
+  bollywood:{'3 Idiots':'Dangal',Dangal:'3 Idiots',Sholay:'Deewar',DDLJ:'Dilwale',Dilwale:'DDLJ',Lagaan:'Mughal-E-Azam',Deewar:'Sholay','Bajrangi':'Lagaan','Mughal-E-Azam':'Sholay','Padmaavat':'Bajrangi','Gangs of Wasseypur':'Uri','Andhadhun':'Article 15','Article 15':'Andhadhun',Uri:'Gully Boy','Gully Boy':'Uri'},
+  superheroes:{'Spider-Man':'Batman',Batman:'Spider-Man',Superman:'Captain America','Iron Man':'Thor',Thor:'Hulk',Hulk:'Thor','Black Panther':'Spider-Man','Wonder Woman':'Thor',Flash:'Spider-Man',Aquaman:'Superman','Captain America':'Iron Man',Wolverine:'Deadpool',Deadpool:'Wolverine','Doctor Strange':'Thor',Shazam:'Superman'},
+  countries:  {India:'Pakistan',USA:'Canada',Japan:'China',Brazil:'Argentina',France:'Germany',Germany:'France',Australia:'New Zealand',Canada:'USA',China:'Japan',Russia:'Ukraine',Italy:'Spain',Spain:'Italy',Mexico:'Brazil',Egypt:'Morocco','South Africa':'Nigeria'},
+  fruits:     {Mango:'Papaya',Apple:'Pear',Banana:'Plantain',Grapes:'Lychee',Watermelon:'Muskmelon',Pineapple:'Papaya',Strawberry:'Cherry',Orange:'Mango',Papaya:'Mango',Guava:'Pear',Lychee:'Grapes',Pomegranate:'Apple',Kiwi:'Guava',Peach:'Apricot',Cherry:'Strawberry'},
+  vegetables: {Onion:'Garlic',Potato:'Sweet potato',Tomato:'Carrot',Carrot:'Radish',Spinach:'Cabbage',Cauliflower:'Cabbage',Brinjal:'Pumpkin',Peas:'Beans',Garlic:'Onion',Ginger:'Garlic',Cabbage:'Spinach',Cucumber:'Zucchini',Pumpkin:'Brinjal',Radish:'Carrot',Beetroot:'Carrot'},
+  apps:       {WhatsApp:'Telegram',Instagram:'Snapchat',YouTube:'Netflix',Snapchat:'Instagram',TikTok:'Instagram',Netflix:'YouTube',Spotify:'Apple Music','Google Maps':'Waze',Uber:'Ola',Zomato:'Swiggy',PUBG:'Free Fire',Minecraft:'Roblox',Roblox:'Minecraft',Chess:'Ludo','Candy Crush':'Subway Surfers'},
+  celebrities:{'Shah Rukh Khan':'Salman Khan','Virat Kohli':'Rohit Sharma','Priyanka Chopra':'Deepika Padukone','Sachin Tendulkar':'Virat Kohli','Ranveer Singh':'Hrithik Roshan','Deepika Padukone':'Alia Bhatt','MS Dhoni':'Virat Kohli','Alia Bhatt':'Deepika Padukone','Akshay Kumar':'Salman Khan','Rohit Sharma':'Virat Kohli','Hrithik Roshan':'Ranveer Singh','Katrina Kaif':'Priyanka Chopra','Amitabh Bachchan':'Shah Rukh Khan','Sonu Nigam':'AR Rahman','AR Rahman':'Sonu Nigam'},
+  emojis:     {'😂':'🤣','🔥':'✨','❤️':'💕','😍':'🥺','🙏':'👏','👏':'🙏','😭':'🥺','💀':'😂','🤣':'😂','😎':'🤔','🥺':'😭','✨':'🔥','🎉':'💯','💯':'🎉','🤔':'😎'},
+  holidays:   {Beach:'Island',Mountain:'Hiking',Safari:'Jungle stay','Camping':'Road trip','Cruise':'Beach','Road trip':'Camping',Backpacking:'Hiking',Skiing:'Mountain',Hiking:'Mountain','City tour':'Theme park','Spa resort':'Cruise','Jungle stay':'Safari',Island:'Beach','Desert camp':'Safari','Theme park':'City tour'},
+  crimes:     {Murder:'Kidnapping',Robbery:'Theft',Kidnapping:'Hostage',Fraud:'Forgery',Hacking:'Espionage',Smuggling:'Trafficking',Arson:'Vandalism',Forgery:'Fraud',Blackmail:'Bribery',Stalking:'Kidnapping',Bribery:'Corruption',Theft:'Robbery',Espionage:'Hacking',Hijacking:'Kidnapping',Vandalism:'Arson'},
+  phobias:    {Heights:'Flying',Spiders:'Insects',Darkness:'Closed spaces',Water:'Drowning',Crowds:'Open spaces',Flying:'Heights',Dogs:'Animals',Thunder:'Lightning',Blood:'Needles',Needles:'Blood',Clowns:'Darkness',Fire:'Thunder',Germs:'Needles','Open spaces':'Crowds','Closed spaces':'Darkness'},
+  household:  {Sweeping:'Mopping',Mopping:'Sweeping','Washing dishes':'Doing laundry',Ironing:'Folding clothes',Cooking:'Grocery shopping',Vacuuming:'Sweeping',Dusting:'Vacuuming','Grocery shopping':'Cooking','Doing laundry':'Washing dishes','Taking out trash':'Sweeping','Cleaning toilet':'Mopping','Watering plants':'Dusting','Making bed':'Folding clothes','Folding clothes':'Ironing',Scrubbing:'Mopping'},
+  college:    {Assignment:'Deadline',Deadline:'Assignment',Canteen:'Hostel',Hostel:'Canteen',Exam:'Backlog',Backlog:'Exam',Attendance:'Bunking',Internship:'Placement',Project:'Assignment',Semester:'Exam',Fresher:'Hostel',Bunking:'Attendance',Professor:'Lab',Lab:'Professor',Placement:'Internship'},
+  relationships:{Crush:'Flirting',Breakup:'Ghosting','First date':'Proposal',Marriage:'Proposal',Proposal:'Marriage',Jealousy:'Argument',Friendship:'Commitment',Ghosting:'Breakup','Long distance':'Commitment',Flirting:'Crush',Argument:'Breakup','Making up':'Argument',Anniversary:'Marriage',Cheating:'Ghosting',Commitment:'Marriage'},
 };
 // Fallback: pick a different word from same category
 const getHintWord=(catId,realWord)=>{
@@ -578,7 +592,7 @@ const COLORS=['#e24b4a','#378add','#43e8a0','#f7b731','#b47ee8','#ff9a5c','#aaaa
 let myId=null,myName='',myAvatar='😀',myColor='#e24b4a',gameCode='',isHost=false,gameRef=null;
 let hostOpts={wrongcat:true,hard:false,timer:true,vote:true};
 let hostImpCount='auto'; // 'auto' or a number 1-4
-let hostSel=new Set(['animals','food','places','sports','jobs','home','feelings','transport']);
+
 let myRole=null,myWord=null,myCat=null,myCatIcon=null;
 let selVote=null,timerIv=null,timerLeft=90,listeners=[];
 let leaderboard={};// {playerId:{name,emoji,color,wins,rounds}}
@@ -630,16 +644,6 @@ const buildAvatarGrid=(containerId,selIdx,onPick)=>{
 buildAvatarGrid('c-avatar-grid',0,i=>{selectedCreateAvatar=i;});
 buildAvatarGrid('j-avatar-grid',1,i=>{selectedJoinAvatar=i;});
 
-/* ═══ HOST CATS ═══ */
-const buildCats=()=>{
-  const g=document.getElementById('h-cats');g.innerHTML='';
-  CATS.forEach(c=>{
-    const d=document.createElement('div');d.className='cat-chip'+(hostSel.has(c.id)?' on':'');
-    d.innerHTML=`<span class="cat-ico">${c.i}</span><span>${c.l}</span><span class="cat-chk">${hostSel.has(c.id)?'✓':''}</span>`;
-    d.onclick=()=>hostSel.has(c.id)?(hostSel.delete(c.id),d.classList.remove('on'),d.querySelector('.cat-chk').textContent=''):(hostSel.add(c.id),d.classList.add('on'),d.querySelector('.cat-chk').textContent='✓');
-    g.appendChild(d);
-  });
-};
 window.toggleOpt=k=>{hostOpts[k]=!hostOpts[k];document.getElementById('h-'+k).classList.toggle('on',hostOpts[k]);};
 
 window.setImpCount=v=>{
@@ -655,8 +659,6 @@ window.setImpCount=v=>{
     hint.textContent=`Always ${v} imposter${v>1?'s':''}`;
   }
 };
-document.getElementById('all-btn').onclick=()=>{CATS.forEach(c=>hostSel.add(c.id));buildCats();};
-document.getElementById('none-btn').onclick=()=>{hostSel.clear();buildCats();};
 
 /* ═══ SHARE LINK ═══ */
 window.shareLink=()=>{
@@ -686,7 +688,7 @@ window.createGame=async()=>{
     gameRef=ref(db,'games/'+gameCode);
     await set(gameRef,{host:myId,status:'lobby',created:serverTimestamp(),opts:hostOpts,players:{[myId]:{name,emoji:myAvatar,color:myColor,ready:false}},chat:{},leaderboard:{},rematch:{}});
     document.getElementById('lh-code').textContent=gameCode;
-    buildCats();leaderboard={};SS('s-lobby-host');setStatus('Room ready · '+gameCode);
+    leaderboard={};SS('s-lobby-host');setStatus('Room ready · '+gameCode);
     listenGame();
   }catch(e){toast('Error: '+e.message);btn.disabled=false;btn.textContent='Create Room →';}
 };
@@ -802,13 +804,8 @@ const escHtml=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;
 window.hostStart=async()=>{
   const snap=await get(ref(db,'games/'+gameCode+'/players'));
   const ps=snap.val()||{};const ids=shuf(Object.keys(ps));const n=ids.length;
-  // Pick category
-  const cats=CATS.filter(c=>hostSel.has(c.id));
-  // Add custom words as a custom category
-  const customRaw=document.getElementById('custom-words-inp').value;
-  const customWords=customRaw.split(',').map(w=>w.trim()).filter(w=>w.length>1);
-  if(customWords.length>0)cats.push({id:'custom',l:'Custom',i:'⭐',w:customWords});
-  const cat=cats[Math.floor(Math.random()*cats.length)];
+  // Pick random category from ALL categories — fully random every game
+  const cat=CATS[Math.floor(Math.random()*CATS.length)];
   const word=cat.w[Math.floor(Math.random()*cat.w.length)];
   const others=CATS.filter(c=>c.id!==cat.id);
   const wCat=hostOpts.wrongcat&&others.length?others[Math.floor(Math.random()*others.length)]:cat;
@@ -1106,7 +1103,7 @@ window.hostPlayAgainSameRoom=async()=>{
   updates['games/'+gameCode+'/rematch']=null;
   updates['games/'+gameCode+'/realWord']=null;
   await update(ref(db),updates);
-  buildCats();
+  
   SS('s-lobby-host');
   setStatus('Same room — ready for next round!','green');
   toast('🎉 Same code: '+gameCode);
@@ -1124,6 +1121,5 @@ window.leaveGame=async()=>{
 };
 window.goHome=()=>{if(gameCode&&!confirm('Leave the game?'))return;leaveGame();};
 </script>
-
 </body>
 </html>
