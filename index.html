@@ -100,9 +100,9 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
 .cat-chip.on{border-color:var(--red);background:rgba(226,75,74,0.1);color:var(--rl)}
 .cat-chip.on .cat-chk{background:var(--red);border-color:var(--red);color:#fff}
 .link-btn{font-size:12px;color:var(--mu);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--fb)}
-.imp-pick{padding:6px 16px;border-radius:100px;border:1px solid var(--b2);background:transparent;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;font-family:var(--fb);transition:all .18s}
-.imp-pick:hover{border-color:var(--red);color:var(--red)}
-.imp-pick.on{background:var(--red);border-color:var(--red);color:#fff}
+.imp-pick,.pp-imp-pick{padding:6px 16px;border-radius:100px;border:1px solid var(--b2);background:transparent;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;font-family:var(--fb);transition:all .18s}
+.imp-pick:hover,.pp-imp-pick:hover{border-color:var(--red);color:var(--red)}
+.imp-pick.on,.pp-imp-pick.on{background:var(--red);border-color:var(--red);color:#fff}
 
 /* CARD */
 .card-stage{display:flex;flex-direction:column;align-items:center;gap:1.25rem;padding:.5rem 0 1.5rem}
@@ -247,10 +247,11 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
     </div>
     <button class="big-btn primary" onclick="SS('s-create')">🎮 Create Game</button>
     <button class="big-btn secondary" onclick="SS('s-join')">🔗 Join with Code</button>
+    <button class="big-btn green" onclick="goPassAndPlay()">📱 Pass &amp; Play (One Phone)</button>
     <div id="share-join-wrap" style="display:none;margin-top:.5rem">
       <button class="big-btn green" id="share-join-btn">🌐 Join via Link</button>
     </div>
-    <div style="text-align:center;margin-top:1.5rem;font-size:12px;color:var(--di)">Share a code or link · Everyone on their own phone</div>
+    <div style="text-align:center;margin-top:1.5rem;font-size:12px;color:var(--di)">Share a code or link · or pass one phone around the table</div>
   </div>
 
   <!-- CREATE -->
@@ -483,6 +484,140 @@ header{width:100%;max-width:560px;padding:1.25rem 1.5rem 0;display:flex;align-it
       <div id="forgot-card"></div>
       <button class="big-btn primary" style="max-width:280px;margin-top:1.25rem" onclick="SS('s-play')">Got it — back to game</button>
     </div>
+  </div>
+
+  <!-- PASS & PLAY: SETUP -->
+  <div class="screen" id="s-pp-setup">
+    <div style="text-align:center;margin-bottom:1.5rem;padding-top:.5rem">
+      <div style="font-family:var(--fd);font-size:38px;letter-spacing:3px">PASS &amp; PLAY</div>
+      <p style="font-size:13px;color:var(--mu)">One phone, passed around the table</p>
+    </div>
+    <div class="panel">
+      <div class="plbl">Add players</div>
+      <div style="display:flex;gap:8px;margin-bottom:.75rem">
+        <input class="inp" id="pp-name-inp" type="text" maxlength="14" placeholder="Enter a name" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();ppAddPlayer();}">
+        <button class="big-btn primary" style="width:auto;padding:0 20px;margin:0;flex-shrink:0" onclick="ppAddPlayer()">Add</button>
+      </div>
+      <div class="players-list" id="pp-players-list"></div>
+      <div style="font-size:11px;color:var(--di);margin-top:.25rem">Min 3 players · Max 12</div>
+    </div>
+    <div class="panel">
+      <div class="plbl">Options</div>
+      <div class="opts-grid">
+        <div class="opt on" id="pp-wrongcat" onclick="ppToggleOpt('wrongcat')"><div class="opt-ico">❓</div><div><div class="opt-name">Wrong Category</div><div class="opt-desc">Imposter sees wrong cat</div></div></div>
+        <div class="opt on" id="pp-timer" onclick="ppToggleOpt('timer')"><div class="opt-ico">⏱️</div><div><div class="opt-name">Timer</div><div class="opt-desc">90s discussion timer</div></div></div>
+      </div>
+      <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--b1)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem">
+          <div>
+            <div style="font-size:12px;font-weight:600;color:var(--mu)">🕵️ Number of Imposters</div>
+            <div style="font-size:11px;color:var(--di);margin-top:1px" id="pp-imp-auto-hint">Auto (based on players)</div>
+          </div>
+          <div style="font-family:var(--fd);font-size:36px;color:var(--red);letter-spacing:1px;min-width:28px;text-align:center" id="pp-imp-count-display">Auto</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="pp-imp-pick on" data-v="auto" onclick="setPPImpCount('auto')">Auto</button>
+          <button class="pp-imp-pick" data-v="1" onclick="setPPImpCount(1)">1</button>
+          <button class="pp-imp-pick" data-v="2" onclick="setPPImpCount(2)">2</button>
+          <button class="pp-imp-pick" data-v="3" onclick="setPPImpCount(3)">3</button>
+          <button class="pp-imp-pick" data-v="4" onclick="setPPImpCount(4)">4</button>
+        </div>
+      </div>
+    </div>
+    <button class="big-btn primary" id="pp-start-btn" onclick="ppStartGame()" disabled>START GAME</button>
+    <button class="big-btn secondary" onclick="SS('s-home')">← Back</button>
+  </div>
+
+  <!-- PASS & PLAY: PASS SCREEN (privacy screen between turns) -->
+  <div class="screen" id="s-pp-pass">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:65vh;text-align:center">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--di);margin-bottom:.75rem" id="pp-pass-lbl">Pass the phone to</div>
+      <div style="font-size:56px;margin-bottom:.5rem" id="pp-pass-emoji">😀</div>
+      <div style="font-family:var(--fd);font-size:40px;letter-spacing:2px;margin-bottom:1.5rem;line-height:1.1" id="pp-pass-name">Player</div>
+      <div style="font-size:12px;color:var(--di);margin-bottom:1.5rem">Make sure no one else is peeking!</div>
+      <button class="big-btn primary" style="max-width:280px" id="pp-pass-btn" onclick="ppPassContinue()">I'm ready →</button>
+    </div>
+  </div>
+
+  <!-- PASS & PLAY: CARD -->
+  <div class="screen" id="s-pp-card">
+    <div style="text-align:center;margin-bottom:.75rem">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--di);margin-bottom:3px">Your secret card</div>
+      <div style="font-family:var(--fd);font-size:26px;letter-spacing:2px" id="pp-card-name">Player</div>
+    </div>
+    <div class="card-stage">
+      <div class="card-box" id="pp-card-box">
+        <div class="card-side c-back"><div class="cback-mesh"></div><div class="cback-logo">IMPOSTER</div><div class="cback-sub">Your secret card</div><div class="tap-hint">tap to reveal</div></div>
+        <div class="card-side c-front" id="pp-card-front"></div>
+      </div>
+      <button class="big-btn primary" id="pp-card-next-btn" style="display:none;width:280px" onclick="ppNextCard()">Seen it — Pass on →</button>
+    </div>
+  </div>
+
+  <!-- PASS & PLAY: DISCUSSION -->
+  <div class="screen" id="s-pp-play">
+    <div style="text-align:center;margin-bottom:1rem">
+      <div style="font-family:var(--fd);font-size:42px;letter-spacing:3px;line-height:1;margin-bottom:2px">GAME ON</div>
+      <p style="font-size:13px;color:var(--mu)">Put the phone down — discuss!</p>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(247,183,49,0.12),rgba(247,183,49,0.06));border:1px solid rgba(247,183,49,0.3);border-radius:var(--r);padding:.9rem 1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:12px">
+      <div style="font-size:32px" id="pp-sp-emoji">😀</div>
+      <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--amb);font-weight:600;margin-bottom:1px">🎲 Speaks first</div><div style="font-family:var(--fd);font-size:22px;letter-spacing:1px;color:#fac775" id="pp-sp-name">—</div><div style="font-size:11px;color:var(--mu)">Give a clue — don't give it away!</div></div>
+    </div>
+    <div class="timer-wrap" id="pp-play-timer" style="display:none">
+      <div class="timer-ring">
+        <svg width="96" height="96" viewBox="0 0 96 96"><circle class="t-track" cx="48" cy="48" r="41"/><circle class="t-prog" id="pp-t-prog" cx="48" cy="48" r="41"/></svg>
+        <div class="timer-center"><div class="timer-num" id="pp-t-num">90</div><div class="timer-lbl">sec</div></div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button onclick="ppTimerStart()" id="pp-t-start" style="padding:6px 16px;border-radius:100px;border:1px solid rgba(67,232,160,0.4);background:rgba(67,232,160,0.07);color:var(--grn);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--fb)">Start</button>
+        <button onclick="ppTimerPause()" id="pp-t-pause" style="display:none;padding:6px 16px;border-radius:100px;border:1px solid var(--b2);background:transparent;color:var(--mu);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--fb)">Pause</button>
+        <button onclick="ppTimerReset()" style="padding:6px 16px;border-radius:100px;border:1px solid var(--b2);background:transparent;color:var(--mu);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--fb)">Reset</button>
+      </div>
+    </div>
+    <button class="abtn blue" onclick="ppStartVoting()"><span class="ico">🎯</span><div><div>Start Voting</div><div class="abtn-sub">Pass the phone for each player to vote</div></div></button>
+    <button class="abtn red" onclick="ppReveal()"><span class="ico">👁️</span><div><div>Reveal Now</div><div class="abtn-sub">Skip voting</div></div></button>
+  </div>
+
+  <!-- PASS & PLAY: VOTE -->
+  <div class="screen" id="s-pp-vote">
+    <div style="text-align:center;margin-bottom:1rem">
+      <div style="font-family:var(--fd);font-size:42px;letter-spacing:3px;line-height:1;margin-bottom:2px">VOTE</div>
+      <p style="font-size:13px;color:var(--mu)" id="pp-vote-sub">Who is the imposter?</p>
+    </div>
+    <div class="vote-grid" id="pp-vote-grid"></div>
+    <button class="big-btn primary" id="pp-vote-submit" disabled onclick="ppSubmitVote()">Submit Vote →</button>
+  </div>
+
+  <!-- PASS & PLAY: RESULT -->
+  <div class="screen" id="s-pp-result">
+    <span class="result-emoji" id="pp-r-emoji">🎉</span>
+    <div style="font-family:var(--fd);font-size:48px;letter-spacing:3px;line-height:1;text-align:center;margin-bottom:.2rem" id="pp-r-title">CREW WINS</div>
+    <p style="font-size:15px;color:var(--mu);text-align:center;margin-bottom:1.25rem" id="pp-r-msg">—</p>
+
+    <div class="tab-row">
+      <button class="tab-btn on" onclick="showTab('pp-t-result',this)">Result</button>
+      <button class="tab-btn" onclick="showTab('pp-t-lb',this)">🏆 Leaderboard</button>
+    </div>
+
+    <div class="tab-pane active" id="pp-t-result">
+      <div class="wrc"><div class="wrc-lbl">Secret word</div><div class="wrc-word" id="pp-r-word">—</div><div class="wrc-cat" id="pp-r-cat">—</div></div>
+      <div style="background:var(--surf);border:1px solid var(--b1);border-radius:var(--rl2);overflow:hidden;margin-bottom:1rem">
+        <div class="rt-head"><span>Player</span><span>Votes</span><span>Role</span></div>
+        <div id="pp-r-rows"></div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="pp-t-lb">
+      <div class="panel" style="padding:1rem">
+        <div class="plbl">Session Leaderboard</div>
+        <div id="pp-lb-list"></div>
+      </div>
+    </div>
+
+    <button class="big-btn primary" onclick="ppPlayAgain()">🔄 Play Again — Same Players</button>
+    <button class="big-btn secondary" onclick="ppChangePlayers()">👥 Change Players</button>
+    <button class="big-btn secondary" onclick="ppEndGame()">Exit to Home</button>
   </div>
 </div>
 
@@ -1120,6 +1255,275 @@ window.leaveGame=async()=>{
   SS('s-home');
 };
 window.goHome=()=>{if(gameCode&&!confirm('Leave the game?'))return;leaveGame();};
+
+/* ═══════════════════════════════════════════════════
+   PASS & PLAY — single device, passed around the table
+   (No Firebase — everything lives in local state)
+═══════════════════════════════════════════════════ */
+let ppPlayers=[]; // {id,name,emoji,color,role,word,cat,catIcon,isImp,wins,rounds}
+let ppOpts={wrongcat:true,timer:true};
+let ppImpCount='auto';
+let ppCardIdx=0,ppVoteIdx=0,ppSelVote=null;
+let ppVotes={}; // voterId -> targetId
+let ppRealWord='',ppRealCat='',ppRealCatIcon='',ppSpeakerId=null;
+let ppTimerLeft=90,ppTimerIv=null;
+let ppPassNext=null;
+
+window.goPassAndPlay=()=>{
+  document.querySelector('.hbadge').textContent='Pass & Play';
+  renderPPPlayers();
+  SS('s-pp-setup');
+};
+
+const renderPPPlayers=()=>{
+  const el=document.getElementById('pp-players-list');el.innerHTML='';
+  ppPlayers.forEach(p=>{
+    const row=document.createElement('div');row.className='prow';
+    row.innerHTML=`<div class="pavatar" style="background:${p.color}22;border:2px solid ${p.color}44">${p.emoji}</div><div style="font-weight:500;font-size:14px;flex:1">${p.name}</div><div class="pbadge kick" onclick="ppRemovePlayer('${p.id}')">✕ Remove</div>`;
+    el.appendChild(row);
+  });
+  document.getElementById('pp-start-btn').disabled=ppPlayers.length<3;
+};
+
+window.ppAddPlayer=()=>{
+  const inp=document.getElementById('pp-name-inp');
+  const name=inp.value.trim();
+  if(!name){toast('Enter a name!');return;}
+  if(ppPlayers.length>=12){toast('Max 12 players!');return;}
+  if(ppPlayers.some(p=>p.name.toLowerCase()===name.toLowerCase())){toast('That name is already added!');return;}
+  const i=ppPlayers.length;
+  ppPlayers.push({id:uid(),name,emoji:AVATARS[i%AVATARS.length],color:COLORS[i%COLORS.length],wins:0,rounds:0});
+  inp.value='';inp.focus();
+  renderPPPlayers();
+  vibrate(30);
+};
+window.ppRemovePlayer=id=>{ppPlayers=ppPlayers.filter(p=>p.id!==id);renderPPPlayers();};
+
+window.ppToggleOpt=k=>{ppOpts[k]=!ppOpts[k];document.getElementById('pp-'+k).classList.toggle('on',ppOpts[k]);};
+
+window.setPPImpCount=v=>{
+  ppImpCount=v;
+  document.querySelectorAll('.pp-imp-pick').forEach(b=>b.classList.toggle('on', b.dataset.v===String(v)));
+  const disp=document.getElementById('pp-imp-count-display');
+  const hint=document.getElementById('pp-imp-auto-hint');
+  if(v==='auto'){disp.textContent='Auto';hint.textContent='Auto (based on player count)';}
+  else{disp.textContent=v;hint.textContent=`Always ${v} imposter${v>1?'s':''}`;}
+};
+
+/* ═══ START GAME — assign roles locally ═══ */
+window.ppStartGame=()=>{
+  if(ppPlayers.length<3){toast('Need at least 3 players!');return;}
+  const ids=shuf(ppPlayers.map(p=>p.id));
+  const n=ids.length;
+  const cat=CATS[Math.floor(Math.random()*CATS.length)];
+  const word=cat.w[Math.floor(Math.random()*cat.w.length)];
+  const others=CATS.filter(c=>c.id!==cat.id);
+  const wCat=ppOpts.wrongcat&&others.length?others[Math.floor(Math.random()*others.length)]:cat;
+  const hintWord=getHintWord(cat.id,word);
+  const impCount=ppImpCount==='auto'?calcI(n):Math.min(+ppImpCount,n-1);
+  const impSet=new Set(shuf([...Array(n).keys()]).slice(0,impCount));
+  ids.forEach((id,i)=>{
+    const p=ppPlayers.find(pp=>pp.id===id);
+    const isI=impSet.has(i);
+    const impWord=ppOpts.wrongcat?getHintWord(wCat.id,wCat.w[Math.floor(Math.random()*wCat.w.length)]):hintWord;
+    p.role=isI?'imp':'crew';
+    p.word=isI?impWord:word;
+    p.cat=isI?(ppOpts.wrongcat?wCat.l:cat.l):cat.l;
+    p.catIcon=isI?(ppOpts.wrongcat?wCat.i:cat.i):cat.i;
+    p.isImp=isI;
+  });
+  ppRealWord=word;ppRealCat=cat.l;ppRealCatIcon=cat.i;
+  const crewIds=ids.filter(id=>!ppPlayers.find(p=>p.id===id).isImp);
+  const speakerPool=crewIds.length?crewIds:ids;
+  ppSpeakerId=speakerPool[Math.floor(Math.random()*speakerPool.length)];
+  // Card-passing order follows the shuffle
+  ppPlayers=ids.map(id=>ppPlayers.find(p=>p.id===id));
+  ppCardIdx=0;
+  ppShowCardPass();
+};
+
+/* ═══ PRIVACY PASS SCREEN ═══ */
+const ppShowCardPass=()=>{
+  const p=ppPlayers[ppCardIdx];
+  document.getElementById('pp-pass-lbl').textContent='Pass the phone to';
+  document.getElementById('pp-pass-emoji').textContent=p.emoji;
+  document.getElementById('pp-pass-name').textContent=p.name;
+  document.getElementById('pp-pass-btn').textContent="I'm ready →";
+  ppPassNext=ppRevealCard;
+  SS('s-pp-pass');
+};
+window.ppPassContinue=()=>{if(ppPassNext)ppPassNext();};
+
+const ppRevealCard=()=>{
+  const p=ppPlayers[ppCardIdx];
+  document.getElementById('pp-card-name').textContent=p.name;
+  const cf=document.getElementById('pp-card-front');
+  cf.className='card-side c-front '+(p.role==='imp'?'imp':'crew');
+  cf.innerHTML=p.role==='imp'
+    ?`<div class="role-tag">Imposter</div>
+      <div class="cf-emoji">🕵️</div>
+      <div class="cf-cat">${p.cat}</div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(240,149,149,0.6);margin-bottom:2px;font-weight:600">YOUR HINT WORD</div>
+      <div class="cf-word">${p.word}</div>
+      <div class="cf-note">Same category — close but not the real word!</div>`
+    :`<div class="role-tag">Crewmate</div><div class="cf-emoji">${p.catIcon}</div><div class="cf-cat">${p.cat}</div><div class="cf-word">${p.word}</div><div class="cf-note">Don't let the imposter guess!</div>`;
+  document.getElementById('pp-card-box').classList.remove('flipped');
+  document.getElementById('pp-card-next-btn').style.display='none';
+  SS('s-pp-card');
+  vibrate([50,50,50]);
+};
+document.getElementById('pp-card-box').onclick=function(){
+  if(!this.classList.contains('flipped')){this.classList.add('flipped');sfxFlip();vibrate(40);document.getElementById('pp-card-next-btn').style.display='block';}
+};
+
+window.ppNextCard=()=>{
+  ppCardIdx++;
+  if(ppCardIdx<ppPlayers.length)ppShowCardPass();
+  else ppStartPlay();
+};
+
+/* ═══ DISCUSSION ═══ */
+const ppStartPlay=()=>{
+  const sp=ppPlayers.find(p=>p.id===ppSpeakerId);
+  document.getElementById('pp-sp-name').textContent=sp?.name||'—';
+  document.getElementById('pp-sp-emoji').textContent=sp?.emoji||'😀';
+  const pt=document.getElementById('pp-play-timer');
+  clearInterval(ppTimerIv);ppTimerIv=null;ppTimerLeft=90;
+  document.getElementById('pp-t-start').style.display='inline-block';
+  document.getElementById('pp-t-pause').style.display='none';
+  if(ppOpts.timer){pt.style.display='flex';ppUpdateTimerUI(90);}else pt.style.display='none';
+  SS('s-pp-play');
+  vibrate([100,50,100]);
+};
+
+const ppUpdateTimerUI=left=>{
+  document.getElementById('pp-t-num').textContent=left;
+  const pct=left/90,r=41,circ=2*Math.PI*r;
+  const p=document.getElementById('pp-t-prog');
+  p.style.strokeDasharray=circ;p.style.strokeDashoffset=circ*(1-pct);
+  const col=pct>.5?'#43e8a0':pct>.25?'#f7b731':'#e24b4a';
+  p.style.stroke=col;document.getElementById('pp-t-num').style.color=col;
+  if(left<=5&&left>0)vibrate(30);
+};
+window.ppTimerStart=()=>{
+  if(ppTimerIv)return;
+  document.getElementById('pp-t-start').style.display='none';document.getElementById('pp-t-pause').style.display='inline-block';
+  ppTimerIv=setInterval(()=>{ppTimerLeft--;ppUpdateTimerUI(ppTimerLeft);if(ppTimerLeft<=0){clearInterval(ppTimerIv);ppTimerIv=null;vibrate([200,100,200]);}},1000);
+};
+window.ppTimerPause=()=>{clearInterval(ppTimerIv);ppTimerIv=null;document.getElementById('pp-t-start').style.display='inline-block';document.getElementById('pp-t-pause').style.display='none';};
+window.ppTimerReset=()=>{clearInterval(ppTimerIv);ppTimerIv=null;ppTimerLeft=90;document.getElementById('pp-t-start').style.display='inline-block';document.getElementById('pp-t-pause').style.display='none';ppUpdateTimerUI(90);};
+
+/* ═══ VOTING — pass phone to each player in turn ═══ */
+window.ppStartVoting=()=>{
+  clearInterval(ppTimerIv);ppTimerIv=null;
+  ppVotes={};ppVoteIdx=0;
+  vibrate(100);
+  ppShowVotePass();
+};
+
+const ppShowVotePass=()=>{
+  const p=ppPlayers[ppVoteIdx];
+  document.getElementById('pp-pass-lbl').textContent='Pass the phone to';
+  document.getElementById('pp-pass-emoji').textContent=p.emoji;
+  document.getElementById('pp-pass-name').textContent=p.name;
+  document.getElementById('pp-pass-btn').textContent="I'm ready to vote →";
+  ppPassNext=ppShowVoteScreen;
+  SS('s-pp-pass');
+};
+
+const ppShowVoteScreen=()=>{
+  const voter=ppPlayers[ppVoteIdx];
+  document.getElementById('pp-vote-sub').textContent=`${voter.name}, who is the imposter?`;
+  ppSelVote=null;
+  const grid=document.getElementById('pp-vote-grid');grid.innerHTML='';
+  ppPlayers.forEach(p=>{
+    if(p.id===voter.id)return;
+    const card=document.createElement('div');card.className='vote-card';
+    card.innerHTML=`<div class="vote-avatar" style="background:${p.color}22;border:2px solid ${p.color}55">${p.emoji}</div><div style="font-size:13px;font-weight:500">${p.name}</div><div id="pp-vc-${p.id}" style="font-size:16px;height:20px;margin-top:3px"></div>`;
+    card.onclick=()=>{document.querySelectorAll('#pp-vote-grid .vote-card').forEach(c=>c.classList.remove('selected'));document.querySelectorAll('[id^="pp-vc-"]').forEach(c=>c.textContent='');card.classList.add('selected');document.getElementById('pp-vc-'+p.id).textContent='✓';ppSelVote=p.id;document.getElementById('pp-vote-submit').disabled=false;sfxVote();vibrate(30);};
+    grid.appendChild(card);
+  });
+  document.getElementById('pp-vote-submit').disabled=true;
+  SS('s-pp-vote');
+};
+
+window.ppSubmitVote=()=>{
+  if(!ppSelVote)return;
+  ppVotes[ppPlayers[ppVoteIdx].id]=ppSelVote;
+  vibrate(60);
+  ppVoteIdx++;
+  if(ppVoteIdx<ppPlayers.length)ppShowVotePass();
+  else ppShowResult(true);
+};
+
+window.ppReveal=()=>{clearInterval(ppTimerIv);ppTimerIv=null;ppShowResult(false);};
+
+/* ═══ RESULT ═══ */
+const ppShowResult=hasVotes=>{
+  const tally={};
+  if(hasVotes)Object.values(ppVotes).forEach(t=>{tally[t]=(tally[t]||0)+1;});
+  const topVoted=Object.entries(tally).sort((a,b)=>b[1]-a[1])[0]?.[0];
+  const impIds=ppPlayers.filter(p=>p.isImp).map(p=>p.id);
+  const caught=hasVotes&&topVoted&&impIds.includes(topVoted);
+  const impWins=hasVotes&&!caught;
+
+  ppPlayers.forEach(p=>{
+    const won=(p.isImp&&impWins)||(!p.isImp&&caught);
+    p.rounds=(p.rounds||0)+1;
+    p.wins=(p.wins||0)+(won?1:0);
+  });
+
+  let emoji,title,msg;
+  if(!hasVotes){emoji='👁️';title='REVEALED';msg='The truth is out!';}
+  else if(caught){emoji='🎉';title='CREW WINS';msg='The imposter was caught!';sfxWin();confetti();vibrate([200,100,200,100,200]);}
+  else{emoji='🕵️';title='IMPOSTER WINS';msg='The crew was fooled!';sfxLose();vibrate([500]);}
+
+  document.getElementById('pp-r-emoji').textContent=emoji;
+  document.getElementById('pp-r-title').textContent=title;
+  document.getElementById('pp-r-msg').textContent=msg;
+  document.getElementById('pp-r-word').textContent=ppRealWord||'—';
+  document.getElementById('pp-r-cat').textContent=(ppRealCat||'')+(ppRealCatIcon?' '+ppRealCatIcon:'');
+
+  const rows=document.getElementById('pp-r-rows');rows.innerHTML='';
+  ppPlayers.forEach(p=>{
+    const vc=tally[p.id]||0;
+    const tr=document.createElement('div');tr.className='rt-row';
+    tr.innerHTML=`<span style="font-weight:500">${p.emoji} ${p.name}${p.id===topVoted&&vc?' 👈':''}</span><span style="font-size:12px;color:var(--di);text-align:center">${hasVotes?vc:'—'}</span><span class="rt-badge ${p.isImp?'imp':'crew'}">${p.isImp?'Imposter':'Crewmate'}</span>`;
+    rows.appendChild(tr);
+  });
+
+  ppRenderLeaderboard();
+  // Always land on the Result tab, regardless of what was open elsewhere
+  document.querySelectorAll('#s-pp-result .tab-pane').forEach(el=>el.classList.remove('active'));
+  document.getElementById('pp-t-result').classList.add('active');
+  document.querySelectorAll('#s-pp-result .tab-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelector('#s-pp-result .tab-row .tab-btn').classList.add('on');
+
+  SS('s-pp-result');
+};
+
+const ppRenderLeaderboard=()=>{
+  const el=document.getElementById('pp-lb-list');el.innerHTML='';
+  const sorted=[...ppPlayers].sort((a,b)=>(b.wins||0)-(a.wins||0));
+  sorted.forEach((p,i)=>{
+    const rank=['🥇','🥈','🥉'][i]||(i+1);
+    const winPct=p.rounds>0?Math.round((p.wins/p.rounds)*100):0;
+    const row=document.createElement('div');row.className='lb-row';
+    row.innerHTML=`<div class="lb-rank">${rank}</div><div class="pavatar" style="background:${p.color}22;border:2px solid ${p.color}44;width:32px;height:32px;font-size:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">${p.emoji}</div><div class="lb-name">${p.name}</div><div class="lb-stats"><div class="lb-stat"><div class="lb-sv" style="color:var(--grn)">${p.wins||0}</div><div class="lb-sl">Wins</div></div><div class="lb-stat"><div class="lb-sv" style="color:var(--amb)">${winPct}%</div><div class="lb-sl">Win%</div></div></div>`;
+    el.appendChild(row);
+  });
+};
+
+window.ppPlayAgain=()=>{ppStartGame();};
+window.ppChangePlayers=()=>{renderPPPlayers();SS('s-pp-setup');};
+window.ppEndGame=()=>{
+  ppPlayers=[];ppVotes={};ppCardIdx=0;ppVoteIdx=0;
+  clearInterval(ppTimerIv);ppTimerIv=null;
+  const inp=document.getElementById('pp-name-inp');if(inp)inp.value='';
+  renderPPPlayers();
+  document.querySelector('.hbadge').textContent='Multiplayer';
+  SS('s-home');
+};
 </script>
 </body>
 </html>
